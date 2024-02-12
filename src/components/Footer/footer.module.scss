@@ -1,0 +1,21 @@
+@import '../../styles/variables.scss';
+
+.footer{
+    display: flex;
+    padding: 0rem 1.5rem;
+    width: 100%;
+    max-width:86rem ;
+    height: auto;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: flex-end;
+}
+
+.link{
+    display: block;
+    border-radius: 0.12rem;
+    padding: 0.38rem 0.94rem;
+    width: 10.69rem;
+    
+}
+

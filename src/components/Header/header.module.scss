@@ -1,0 +1,95 @@
+@import '../../styles/variables.scss';
+
+.header {
+    padding: 1rem 1.5rem;
+    width: 100%;
+    max-height: 12.12rem;
+    height: auto;
+    background: $primary-light-1;
+    box-sizing: border-box;
+}
+
+.header > nav {
+    text-align: left;
+    width: 100%;
+
+    ol {
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.breadcrumb {
+    font-family: $font-family;
+    font-weight: 400;
+    font-size: 0.88rem;
+    line-height: 130%;
+    color: $character-light-title-85;
+}
+
+.headerContent {
+    padding: 0.5rem 0rem 0rem 0rem;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.title {
+    font-family: $font-family;
+    font-weight: 700;
+    font-size: 2.38rem;
+    line-height: 130%;
+    color: $character-light-title-85;
+    text-align: left;
+    padding-right: 157px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.settings {
+    width: 8.06rem;
+    height: 2rem;
+    padding: 7px 15px;
+
+    span {
+        margin-right: 10px;
+    }
+
+    :last-child {
+        font-family: $font-family;
+        font-weight: 400;
+        font-size: 0.88rem;
+        line-height: 130%;
+        text-align: center;
+        color: $character-light-title-85;
+        margin-right: 0;
+    }
+}
+
+.buttonIcon {
+    width: 0.88rem;
+    height: 0.88rem;
+}
+
+@media (width < 1140px) {
+    .title {
+        font-size: 2rem;
+        padding-right: 2rem;
+    }
+
+}
+
+@media (width < 1000px) {
+    .title {
+        font-weight: 500;
+        font-size: 1.5rem;
+        line-height: 130%;
+        padding-right: 3rem;
+    }
+
+    .buttonIcon {
+        display: none;
+    }
+}
