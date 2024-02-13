@@ -7,8 +7,9 @@ import { store } from '@redux/configure-store';
 import Routers from './router';
 
 import 'normalize.css';
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.css';
 import './index.css';
+
 
 
 const domNode = document.getElementById('root') as HTMLDivElement;

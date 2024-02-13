@@ -26,7 +26,7 @@ export const MainPage: React.FC = () => {
                 <div className={styles.description}>
                     <Typography>
                         <Typography.Text className={styles.descriptionText}>
-                        CleverFit — это не просто приложение, а твой личный помощник <br/>в мире фитнеса. Не откладывай на завтра — начни тренироваться уже сегодня!
+                        CleverFit — это не просто приложение, а твой личный помощник в мире фитнеса. Не откладывай на завтра — начни тренироваться уже сегодня!
                         </Typography.Text>
                     </Typography>
                     <div className={styles.cardsContainer}>

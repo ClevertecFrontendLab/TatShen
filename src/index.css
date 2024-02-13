@@ -1,134 +1,186 @@
-:root {
-    font-family: Inter,sans-serif, Roboto, sans-serif;
-    line-height: 1.5;
-    font-weight: 400;
-    color-scheme: light dark;
-    color: rgba(255, 255, 255, 0.87);
-    background-color: #fff;
+@import './styles/variables.scss';
 
-    font-synthesis: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    box-sizing: border-box;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-*{
-    box-sizing: border-box;
-}
+html,
 body {
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    min-width: 320px;
-    width: 100%;
-    max-width: 1440px;
-    
+  overflow-x: hidden;
+  min-width: 360px;
+  max-width: 100vw;
+  display: flex;
+  justify-content: center;
+  scrollbar-width: none;
 }
 
-#root {
-    width: 100%;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    box-sizing: border-box;
-    max-width: 1440px;
+body.no-scroll {
+  overflow-y: hidden;
+  height: 100vh;
+  padding-right: 0.875rem;
 }
 
-
-h1 {
-    font-size: 3.2em;
-    line-height: 1.1;
+a {
+  font-family: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 button {
-    border: 1px solid transparent;
-    padding: 0.6em 1.2em;
-    font-size: 1em;
-    font-weight: 500;
-    font-family: inherit;
-    background-color: transparent;
-    cursor: pointer;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+  background: transparent;
 }
 
-/* button:hover {
-    border-color: #646cff;
+ul,
+ol {
+  list-style-type: none;
 }
-button:focus,
-button:focus-visible {
-    outline: 4px auto -webkit-focus-ring-color;
-} */
 
-@media (prefers-color-scheme: light) {
-    :root {
-        color: #213547;
-        background-color: #fff;
+li{
+  list-style: none;
+}
+
+input {
+  outline: none;
+  border: none;
+  font-family: inherit;
+  cursor: text;
+  caret-color: black;
+}
+
+
+#root{
+  width: 100vw;
+  max-width: 1440px;
+  height: 100vh;
+  background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #fffdfd 100%), url(../public/main-page.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+.ant-layout-header{
+  padding: 1rem 1.5rem;
+}
+
+.ant-layout-footer{
+ padding: 0 24px;
+}
+
+.ant-layout-has-sider{
+  height: 100vh;
+  .ant-layout{
+    gap: 24px;
+    padding-bottom: 42px;
+  }
+}
+
+.ant-card-body{
+  button{width: 100%;}
+  text-align: center;
+}
+
+.ant-btn{
+  border: none;
+}
+
+.ant-card-head-title{
+  text-wrap: wrap;
+}
+
+.ant-card-meta-title{
+    font-family:inherit;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    text-align: center;
+    color: #2f54eb;
+}
+.ant-card-actions > li:not(:last-child){
+  border-right: none;
+}
+.ant-card-head-description{
+    font-family:inherit;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    color: #8c8c8c;
+}
+
+@media (width < 1000px){
+    .ant-layout-header{
+      h1{
+        font-size: 24px;
+      }
     }
-    a:hover {
-        color: #747bff;
+
+    .ant-btn{
+      .anticon-setting{
+        display: none;
+      }
     }
-    button {
-        background-color: #f9f9f9;
+
+    .ant-card-head{
+      display: inline-block;
+      height: 66px;
     }
 }
 
+@media (width < 600px ){
+  .ant-layout-has-sider{
+    aside{
+      max-width: 106px;
+      min-width: 106px;
+      position: absolute;
+      height: 100vh;
+      z-index: 10;
+    }
+  }
 
-
-a {
-    font-weight: 500;
-    color: #646cff;
-    text-decoration: inherit;
-}
-a:hover {
-    color: #535bf2;
-}
-
-
-* {
-    box-sizing: border-box;
-    margin: 0;
+  .ant-menu-vertical .ant-menu-item{
     padding: 0;
+    padding-left: 8px;
   }
+
   
-  html,
-  body {
-    overflow-x: hidden;
-    min-width: 360px;
-    max-width: 100vw;
+  .ant-menu-item .ant-menu-item-icon + span{
+    margin-left: 0;
   }
-  
-  body.no-scroll {
-    overflow-y: hidden;
-    height: 100vh;
-    padding-right: 0.875rem;
+
+  .ant-btn{
+    .anticon-setting{
+      display: block;
+    }
   }
-  
-  a {
-    font-family: inherit;
-    text-decoration: none;
-    color: inherit;
+
+  .ant-layout-header{
+    h1{
+      font-size: 20px;
+    }
   }
-  
-  button {
-    border: none;
-    font-family: inherit;
-    cursor: pointer;
+
+  .ant-layout-footer{
+    padding: 0 16px;
+    gap: 24px;
+    align-items: center;
   }
-  
-  ul,
-  ol {
-    list-style-type: none;
+
+  .ant-card-body{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    padding: 12px 24px;
+    width: 100%;
   }
-  
-  li{
-    list-style: none;
+
+  .ant-card-meta{
+    width: 100%;
   }
-  
-  input {
-    outline: none;
-    border: none;
-    font-family: inherit;
-    cursor: text;
-    caret-color: black;
-  }
-  
+}

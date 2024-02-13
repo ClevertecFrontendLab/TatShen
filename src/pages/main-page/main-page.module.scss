@@ -16,9 +16,8 @@
     flex-direction: column;
     gap: 1.5rem;
     width: 100%;
-    height: 100%;
-    padding-right: 460px;
-    >div{
+    height: auto;
+    > div {
         max-width: 47rem;
         width: 100%;
     }
@@ -34,21 +33,18 @@
 
     > article {
         line-height: 0;
+        span {
+            color: $primary-light-9;
+            font-family: $font-family;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 130%;
+        }
     }
 }
 
-.possibilitiesText,
-.descriptionText {
-    font-family: $font-family;
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 130%;
-    color: $primary-light-9;
-    box-sizing: border-box;
-}
-
 .description {
-    height: 15.19rem;
+    height: auto;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -58,24 +54,27 @@
         height: auto;
         background: $character-light-primary-inverse;
         padding: 1.5rem;
-        padding-right: 5.625rem;
         box-sizing: border-box;
         line-height: 0;
         text-align: left;
+        padding-right: 110px;
 
         > span {
             font-family: $font-family;
             font-weight: 500;
-            font-size: 1.25rem;
+            font-size: 20px;
             line-height: 130%;
             color: $character-light-title-85;
+            
         }
     }
 }
 
 .cardsContainer {
     display: flex;
+    justify-content: space-between;
     gap: 1rem;
+    width: 100%;
 }
 
 .descriptionText {
@@ -93,10 +92,24 @@
 }
 
 @media (width < 1000px) {
-    .possibilities,
-    .description > article, 
+    .description > article {
+       padding-right: 60px;
+    } 
+}
+
+
+@media (width < 800px){
     .cardsContainer {
-        max-width: 100%;
-        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 1rem;
+        width: 100%;
+    }
+}
+
+@media (width< 600px){
+    .main{
+        padding: 0 16px;
     }
 }

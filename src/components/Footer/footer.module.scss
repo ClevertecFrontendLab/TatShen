@@ -4,8 +4,7 @@
     display: flex;
     padding: 0rem 1.5rem;
     width: 100%;
-    max-width:86rem ;
-    height: auto;
+    height: 127px;
     justify-content: space-between;
     box-sizing: border-box;
     align-items: flex-end;
@@ -16,6 +15,19 @@
     border-radius: 0.12rem;
     padding: 0.38rem 0.94rem;
     width: 10.69rem;
-    
-}
+    font-family: $font-family;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 130%;
+    text-align: center;
+    color: $primary-light-6;
+    }
 
+@media (width < 600px){
+    .footer{
+        flex-direction: column-reverse;
+        width: 100%;
+        height: auto;
+        padding: 0 16px;
+    }
+}

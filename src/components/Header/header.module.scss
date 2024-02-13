@@ -3,9 +3,6 @@
 .header {
     padding: 1rem 1.5rem;
     width: 100%;
-    max-height: 12.12rem;
-    height: auto;
-    background: $primary-light-1;
     box-sizing: border-box;
 }
 
@@ -28,31 +25,36 @@
 }
 
 .headerContent {
-    padding: 0.5rem 0rem 0rem 0rem;
+    margin: 34px, 24px, 16px;
+    padding-top: 0.5rem;
     width: 100%;
     height: auto;
     display: flex;
     align-items: flex-start;
-    justify-content: space-between;
-}
-
-.title {
-    font-family: $font-family;
-    font-weight: 700;
-    font-size: 2.38rem;
-    line-height: 130%;
-    color: $character-light-title-85;
-    text-align: left;
-    padding-right: 157px;
-    box-sizing: border-box;
-    margin: 0;
+    margin-bottom: -0.5em;
+    > h1 {
+        font-family: $font-family;
+        font-weight: 700;
+        font-size: 2.38rem;
+        line-height: 130%;
+        color: $character-light-title-85;
+        text-align: left;
+        box-sizing: border-box;
+        margin: 0;
+        width: 85%;
+        padding-right: 130px;
+    }
+    button {
+        background-color: transparent;
+    }
 }
 
 .settings {
-    width: 8.06rem;
+    width: 15%;
     height: 2rem;
     padding: 7px 15px;
-
+    display: flex;
+    justify-content: flex-end;
     span {
         margin-right: 10px;
     }
@@ -78,18 +80,57 @@
         font-size: 2rem;
         padding-right: 2rem;
     }
-
 }
 
 @media (width < 1000px) {
-    .title {
-        font-weight: 500;
-        font-size: 1.5rem;
-        line-height: 130%;
-        padding-right: 3rem;
+    .headerContent {
+        h1 {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 130%;
+            padding-right: 20px;
+        }
     }
 
-    .buttonIcon {
-        display: none;
+    .settings {
+        span {
+            svg {
+                display: none;
+            }
+        }
+    }
+}
+
+@media (width < 600px) {
+    .headerContent {
+        margin-top: 24px;
+        justify-content: space-between;
+        h1 {
+            font-size: 20px;
+        }
+        button {
+            border: 1px solid #d9d9d9;
+            border-radius: 100px;
+            padding: 4px 10px;
+            width: 32px;
+            height: 32px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+            background: $character-light-primary-inverse;
+
+            span{
+                width: 13px;
+                height: 13px;
+            }
+        }
+    }
+
+    .settings {
+        span {
+            svg {
+                display: block;
+                width: 13px;
+                height: 13px;
+            }
+        }
     }
 }

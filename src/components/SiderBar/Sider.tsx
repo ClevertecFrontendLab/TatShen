@@ -7,17 +7,17 @@ import fit from '../../../public/fit.svg'
 import exit from '../../../public/exit.svg';
 import calendar from '../../../public/calendar.svg'
 const { Sider } = Layout;
+import { useResize } from '@hooks/useResize';
 
 const SiderBar: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
-
+     const {width} = useResize()
+    
     const handlerCollapsed = () => {
-        console.log('click');
-        
         setCollapsed(!collapsed)
     }
     return (
-        <Sider className={styles.sider}  trigger={null} collapsible collapsed={collapsed} width={208} collapsedWidth={64}>
+        <Sider className={styles.sider}  trigger={null} collapsible collapsed={collapsed} width={width<600? 106 : 208} collapsedWidth={width<600 ? 1 : 64}>
             <div className={collapsed ? styles.siderContent_close :styles.siderContent_open}>
                 <div className={ collapsed ? styles.logo_fit : styles.logo}>
                     <img src={collapsed ? fit : cleverfit} alt='cleverFit' />
@@ -48,20 +48,19 @@ const SiderBar: React.FC = () => {
                         },
                     ]}
                 ></Menu>
-                <Button className={ styles.button_open}>
-                    <img src={exit} alt='exit' />
+                <Button className={ styles.button_open} style={{height:'40px', boxShadow: ' inset 0 1px 0 0  rgba(0, 0, 0, 0.15)'}}>
+                    <img src={exit} alt='exit' className={styles.exit}/>
                     { collapsed ? '' : <span>Выход</span>}
                 </Button>
             </div>
-            <button className={styles.siderButton} onClick={handlerCollapsed}>
-                <svg width="20" height="66" viewBox="0 0 20 66" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 -1.52588e-05L20 7.99998V58L0 66V-1.52588e-05Z" fill="white" />
-                </svg>
-                {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                    className: styles.siderButtonIcon,
-                })}
-                
-            </button>
+            {width <700 ?  <button className={styles.siderButtonMobile} onClick={handlerCollapsed} data-test-id='sider-switch-mobile'>
+                {collapsed ? <MenuUnfoldOutlined className={styles.siderButtonIcon}/> : <MenuFoldOutlined className={styles.siderButtonIcon} /> 
+                }
+            </button> :
+            <button className={styles.siderButton} onClick={handlerCollapsed} data-test-id='sider-switch'>
+                {collapsed ? <MenuUnfoldOutlined className={styles.siderButtonIcon}/> : <MenuFoldOutlined className={styles.siderButtonIcon} /> 
+                }
+            </button>}
         </Sider>
     );
 };
