@@ -1,4 +1,4 @@
-@import './styles/variables.scss';
+@import 'antd/dist/antd.css';
 
 * {
   box-sizing: border-box;
@@ -56,11 +56,8 @@ input {
 #root{
   width: 100vw;
   max-width: 1440px;
-  height: 100vh;
-  background-image: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, #fffdfd 100%), url(../public/main-page.png);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  min-height: 100vh;
+  height: 100%;
 }
 
 
@@ -74,7 +71,6 @@ input {
 }
 
 .ant-layout-has-sider{
-  height: 100vh;
   .ant-layout{
     gap: 24px;
     padding-bottom: 42px;
@@ -112,6 +108,12 @@ input {
     line-height: 130%;
     text-align: center;
     color: #8c8c8c;
+}
+
+.ant-layout-header{
+  h1{
+    font-size: 38px;
+  }
 }
 
 @media (width < 1000px){

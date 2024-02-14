@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styles from './sider.module.scss';
 import { HeartFilled, TrophyFilled, IdcardOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { Button, Layout, Menu } from 'antd';
-import cleverfit from '../../../public/cleverFit.svg';
-import fit from '../../../public/fit.svg'
-import exit from '../../../public/exit.svg';
-import calendar from '../../../public/calendar.svg'
+import cleverfit from '../../assets/cleverFit.svg';
+import fit from '../../assets/fit.svg'
+import exit from '../../assets/exit.svg';
+import calendar from '../../assets/calendar.svg'
 const { Sider } = Layout;
 import { useResize } from '@hooks/useResize';
 

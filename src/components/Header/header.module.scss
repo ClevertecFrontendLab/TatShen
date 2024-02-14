@@ -25,7 +25,6 @@
 }
 
 .headerContent {
-    margin: 34px, 24px, 16px;
     padding-top: 0.5rem;
     width: 100%;
     height: auto;
@@ -35,7 +34,6 @@
     > h1 {
         font-family: $font-family;
         font-weight: 700;
-        font-size: 2.38rem;
         line-height: 130%;
         color: $character-light-title-85;
         text-align: left;
@@ -84,6 +82,7 @@
 
 @media (width < 1000px) {
     .headerContent {
+        padding: 34px 24px 16px 0;
         h1 {
             font-weight: 500;
             font-size: 24px;
