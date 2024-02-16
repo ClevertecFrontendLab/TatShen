@@ -1,0 +1,49 @@
+@import '../../styles/variables.scss';
+
+.input_container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: $font-family;
+    >div{
+        margin: 0;
+        min-height: 40px;
+    }
+}
+
+.check_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: $font-family;
+    div{
+        margin: 0;
+    }
+    .check_button{
+        min-height: 32px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 130%;
+        text-align: center;
+        color: $primary-light-6;
+    }
+}
+
+.button_container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    font-family: $font-family;
+    div{
+        margin: 0;
+        button{
+            height: 40px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-primary-inverse;
+        }
+    }
+
+}
