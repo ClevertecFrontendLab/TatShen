@@ -1,0 +1,12 @@
+export const HOMEPAGE = '/main';
+export const AUTH = '/auth';
+export const REGISTRATION = 'registration';
+export const RESULTS = '/result';
+export const ERROR_LOGIN = '/result/error-login';
+export const SUCCESS = '/result/success';
+export const RESULT_ERROR = '/result/error'
+export const ERROR_USER_EXIST_WITH_EMAIL = '/result/error-user-exist-with-email'
+export const ERROR_EMAIL = '/result/error-check-email-no-exist';
+export const CODE = '/auth/confirm-email';
+export const ERROR_UNKNOWN = '/result/error-unknown';
+export const ERROR_NETWORK = '/result/error-check-email'

@@ -9,11 +9,10 @@ interface IModaProps{
     children: React.ReactNode,
 }
 
-const Modal:React.FC<IModaProps> = ({className, children}) => {  
-    
+const Modal:React.FC<IModaProps> = ({className, children}) => {
     const classes = classNames(styles.modal, className)
     return <div className={classes} >
-        {className == 'enter-modal'? <img src={cleverFit} alt="cleverFit" className={styles.modal_logo}></img> : '' }
+        {className == '_enter_modal_1b4hv_1'? <img src={cleverFit} alt="cleverFit" className={styles.modal_logo}></img> : '' }
         {children}
     </div>
 }

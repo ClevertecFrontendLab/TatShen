@@ -129,6 +129,18 @@ input {
   
 }
 
+.vi__character{
+  width: 40px;
+  height: 40px;
+  border-radius: 2px;
+  border: 1px solid #d9d9d9;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 130%;
+  padding: 10px;
+  
+}
+
 @media (width < 1000px){
     .ant-layout-header{
       h1{

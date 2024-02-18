@@ -3,6 +3,8 @@ import React from 'react';
 import styles from '../result-page.module.scss';
 import { CloseCircleFilled } from '@ant-design/icons';
 import { Button } from 'antd';
+import { AUTH } from '@constants/router';
+import { Link } from 'react-router-dom';
 
 const ErrorEmail: React.FC = () => {
     return (
@@ -15,7 +17,7 @@ const ErrorEmail: React.FC = () => {
                         Мы не нашли в базе вашего e-mail. Попробуйте войти с другим e-mail.
                     </span>
                 </div>
-                <Button style={{ width: '100%' }}>Попробовать снова</Button>
+                <Button style={{ width: '100%' }}><Link to={AUTH}>Попробовать снова</Link></Button>
             </div>
         </Modal>
     );
