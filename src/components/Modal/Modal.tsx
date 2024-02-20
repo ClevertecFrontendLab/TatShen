@@ -4,12 +4,12 @@ import cleverFit from '../../assets/cleverFit.svg'
 import styles from './Modal.module.scss'
 
 
-interface IModaProps{
+interface IModalProps{
     className?: string,
     children: React.ReactNode,
 }
 
-const Modal:React.FC<IModaProps> = ({className, children}) => {
+const Modal:React.FC<IModalProps> = ({className, children}) => {
     const classes = classNames(styles.modal, className)
     return <div className={classes} >
         {className == '_enter_modal_1b4hv_1'? <img src={cleverFit} alt="cleverFit" className={styles.modal_logo}></img> : '' }

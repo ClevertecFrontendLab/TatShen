@@ -5,7 +5,7 @@
     padding: 64px 32px;
     width: 539px;
     height: 345px;
-   
+    font-family: $font-family;
     
 }
 .code_container{
@@ -42,7 +42,7 @@
             height: 62px;
         }
     }
-    h2{
+    h2{ 
         font-weight: 500;
         font-size: 24px;
         line-height: 130%;
@@ -66,12 +66,12 @@
         padding: 4px 15px;
         width: 100%;
         height: 40px;
-        span{
+        a, span{
             font-weight: 400;
             font-size: 14px;
             line-height: 130%;
             text-align: center;
-            color: $character-light-primary-inverse;
+            color: $character-light-primary-inverse !important;
         }
     }
     .text_content{
@@ -93,6 +93,7 @@
 
     
 }
+
 
 @media (width < 600px){
     .container{

@@ -1,23 +1,87 @@
 import Modal from '@components/Modal/Modal';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './confirm-email.module.scss';
-import { ExclamationCircleFilled } from '@ant-design/icons';
+import { CloseCircleFilled, ExclamationCircleFilled } from '@ant-design/icons';
 import VerificationInput from 'react-verification-input';
+import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useConfirmEmailMutation } from '../../../services/EnterService';
+import { setCode } from '@redux/userReducer';
+import { Loader } from '@components/Loader/Loader';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AUTH, CHANGE_PASSWORD } from '@constants/router';
+
 
 const Code: React.FC = () => {
+    const { email, code } = useAppSelector((state) => state.user);
+    const location = useLocation();
+    const [modalState, setModalState] = useState(true);
+    const lastPage = location.state?.from.pathname;
+
+    const navigate = useNavigate();
+
+    const dispatch = useAppDispatch();
+    const [
+        confirmEmail,
+        {
+            isError: isErrorConfirmEmail,
+            isLoading: isLoadingConfirmEmail,
+            isSuccess: isSiccessConfirmEmail,
+            error: confirmEmailError,
+        },
+    ] = useConfirmEmailMutation();
+
+
+    const handleOnChange = (e: string) => {
+        dispatch(setCode(e));
+        if (code.length == 6) {
+            confirmEmail({ email, code });
+        }
+    };
+
+    useEffect(() => {
+        if (lastPage !== '/auth') {
+            navigate(AUTH);
+        }
+    }, [lastPage, navigate]);
+
+    useEffect(() => {
+        if (isErrorConfirmEmail) {
+            setModalState(false);
+        } else if(isSiccessConfirmEmail){
+            navigate(CHANGE_PASSWORD)
+        }
+    }, [isErrorConfirmEmail, isSiccessConfirmEmail, navigate]);
+
+    useEffect(() => {
+        if (isLoadingConfirmEmail) {
+            <Loader></Loader>;
+        }
+    }, [isLoadingConfirmEmail]);
+
     return (
         <Modal className={styles.code_container}>
             <div className={styles.content}>
-                <ExclamationCircleFilled style={{ color: ' #2f54eb' }} className={styles.icon} />
+                {modalState ? (
+                    <ExclamationCircleFilled
+                        style={{ color: ' #2f54eb' }}
+                        className={styles.icon}
+                    />
+                ) : (
+                    <CloseCircleFilled style={{ color: ' #ff4d4f' }} className={styles.icon} />
+                )}
                 <div className={styles.text_content} style={{ padding: '0px' }}>
-                    <h2>Введите код для восстановления аккауанта</h2>
+                    {modalState ? (
+                        <h2>Введите код для восстановления аккауанта</h2>
+                    ) : (
+                        <h2>Неверный код. Введите код для восстановления аккауанта</h2>
+                    )}
                     <span className={styles.error_user_exist}>
                         Мы отправили вам на e-mail{' '}
-                        <span style={{ fontWeight: '600' }}>victorbyden@gmail.com</span>{' '}
-                        шестизначный код. Введите его в поле ниже.
+                        <span style={{ fontWeight: '700' }}>{email}</span> шестизначный код. Введите
+                        его в поле ниже.
                     </span>
                 </div>
-                <VerificationInput placeholder=''/>
+                {modalState ? <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  /> : <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  classNames={{ container: "Error_container"}} /> } 
                 <span className={styles.letter}>Не пришло письмо? Проверьте папку Спам.</span>
             </div>
         </Modal>

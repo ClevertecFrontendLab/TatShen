@@ -14,8 +14,9 @@ export const validatePassword = (password: string) => {
 
     const existUpper = Boolean(clearPass.match(/[A-Z]/));
     const existNumber = Boolean(clearPass.match(/[0-9]/));
+    const existSimbol = /^[a-zA-Z0-9]+$/.test(clearPass)
 
-    if (!existUpper || !existNumber) {
+    if (!existUpper || !existNumber || !existSimbol) {
         return false;
     }
 

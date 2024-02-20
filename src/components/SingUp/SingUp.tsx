@@ -5,36 +5,25 @@ import styles from './SingUp.module.scss'
 import { GooglePlusOutlined } from "@ant-design/icons";
 import { useResize } from "@hooks/useResize";
 import { enterApi } from "../../services/EnterService";
-import debounce from '../../utils/debounce'
 import {validateEmail, validatePassword} from '../../utils/index'
-import { useAppDispatch} from "@hooks/typed-react-redux-hooks";
+import { useAppDispatch, useAppSelector} from "@hooks/typed-react-redux-hooks";
 import { setEmail, setPassword } from "@redux/userReducer";
 import { IServerErrorResponse } from "../../types/enterTypes";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as ROUTERS from '../../constants/router'
 import { Loader } from "@components/Loader/Loader";
+import { IForm, initialFormState } from "@pages/auth-page/types";
 
-interface ISingUpForm{
-  email: string;
-  password: string;
-  repeatPassword: string;
-  emailValid:boolean;
-  passwordValid: boolean;
-  repeatPasswordValid: boolean
-}
 
-const initialFormState: ISingUpForm ={
-  email:'',
-  password:'',
-  repeatPassword:'',
-  emailValid:false,
-  passwordValid:false,
-  repeatPasswordValid:false
-}
+
 
 const SingUp:React.FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate()
+  const location = useLocation()
+  const {email, password} = useAppSelector(state => state.user)
+  
+  const fromPage = location.state?.from
   
   const [registrationUser, {
     isError : isErrorForRegistration, 
@@ -43,63 +32,71 @@ const SingUp:React.FC = () => {
     error: registrationError}] = enterApi.useRegistrationMutation()
 
   const defaultPrefixCls = 'e-mail:'
-  const [formState, setFormState] = useState<ISingUpForm>(initialFormState)
+  const [formState, setFormState] = useState<IForm>(initialFormState)
   const {width} = useResize()
-  console.log(formState);
+
   
 
   const handleRegistration =  () => {
-    const email = formState.email
-    const password = formState.password
     registrationUser({email, password})
   }
 
-  const handleChangeEmail = debounce((e: { target: { value: string; }; }) => { setFormState(formState => ({
+  const handleChangeEmail = (e: { target: { value: string; }; }) => { setFormState(formState => ({
       ...formState, 
       email: e.target.value,
-      emailValid: validateEmail(e.target.value)
+      isEmailValid: validateEmail(e.target.value)
     }))
-    formState.emailValid && dispatch(setEmail(e.target.value))
-    }, 1500)
+    dispatch(setEmail(e.target.value))
+    }
 
-  const handleChangePassword = debounce((e: { target: { value: string; }; }) => { setFormState(formState => ({
+  const handleChangePassword = (e: { target: { value: string; }; }) => { setFormState(formState => ({
       ...formState, 
       password: e.target.value,
-      passwordValid: validatePassword(e.target.value)
+      isPasswordValid: validatePassword(e.target.value)
     }))
-    }, 1500)
+    dispatch(setPassword(e.target.value))
+    }
 
-    const isFormValid = formState.emailValid && formState.passwordValid && formState.repeatPasswordValid 
+    const isFormValid = formState.isEmailValid && formState.isPasswordValid && formState.isRepeatPasswordValid 
 
-    const handleChangeRepeatPassword = debounce((e: { target: { value: string; }; }) => { setFormState(formState => ({
+    const handleChangeRepeatPassword = (e: { target: { value: string; }; }) => { setFormState(formState => ({
       ...formState, 
       repeatPassword: e.target.value,
-      repeatPasswordValid: formState.password === e.target.value
+      isRepeatPasswordValid:validatePassword(e.target.value) && formState.password === e.target.value 
     }))
-    formState.repeatPasswordValid && dispatch(setPassword(e.target.value))
-    }, 1500)
+    dispatch(setPassword(e.target.value))
+    }
+    useEffect(() => {
+      if(isLoadingForRegistration){
+         <Loader></Loader>
+      }
+    }, [isLoadingForRegistration])
 
     useEffect(()=>{
         if(isErrorForRegistration && registrationError){
           if ((registrationError as IServerErrorResponse).status.toString() === '409'){
-            navigate(ROUTERS.ERROR_USER_EXIST_WITH_EMAIL)
+            navigate(`/result/${ROUTERS.ERROR_USER_EXIST}`)
           } else if(isErrorForRegistration){
-            navigate(ROUTERS.ERROR_UNKNOWN)
-          }
+            navigate( `/result/${ROUTERS.RESULT_ERROR}`)
+          } 
         }
-    }, [isErrorForRegistration, navigate, registrationError])
-
-    useEffect(()=>{
-      if(isSuccessForRegistration){
-        navigate(ROUTERS.SUCCESS)
-      }
-  }, [isSuccessForRegistration, navigate])
+    }, [ isErrorForRegistration, isLoadingForRegistration, isSuccessForRegistration, navigate, registrationError, registrationUser])
+    
 
   useEffect(()=>{
-     if(isLoadingForRegistration){
-      <Loader></Loader>
+    if(isSuccessForRegistration){
+      navigate( `/result/${ROUTERS.SUCCESS}`)
+    }
+  }, [isSuccessForRegistration, navigate])
+  
+  useEffect(()=>{
+    console.log(fromPage == '/result/error');
+    
+    if( fromPage == '/result/error'){
+      registrationUser({email, password})
      }
-  }, [isLoadingForRegistration])
+  }, [email, fromPage, password, registrationUser])
+
     
     return <Form
       wrapperCol={{ span: 24 }}
@@ -110,57 +107,32 @@ const SingUp:React.FC = () => {
       <div className={styles.input_container}>
       <Form.Item
             name="email"
-            rules={[
-              {
-                type: 'email',
-                message: 'The input is not valid E-mail!',
-              },
-              {
-                required: true,
-                message: 'Please input your E-mail!',
-              },
-            ]}
-
+            validateStatus={formState.email && !formState.isEmailValid ? 'error' : 'success'}
+            validateTrigger='onChange'
+            help=''
           >
             <Input addonBefore={defaultPrefixCls} style={{width:'100%'}} onChange={(e)=> handleChangeEmail(e)}/>
           </Form.Item>
 
-          <Form.Item extra="Пароль не менее 8 символов, с заглавной буквой и цифрой"
+          <Form.Item help="Пароль не менее 8 символов, с заглавной буквой и цифрой"
             name="password"
-            rules={[
-              {
-                required: true,
-                message: '',
-              },
-            ]}
-          >
+            validateStatus={formState.password && !formState.isPasswordValid? 'error' : 'success'}
+            validateTrigger='onChange'>
             <Input.Password placeholder="Пароль" onChange={(e)=> handleChangePassword(e)}/>
           </Form.Item>
 
           <Form.Item
             name="confirm"
             dependencies={['password']}
-            rules={[
-              {
-                required: true,
-                message: '',
-              },
-              ({ getFieldValue }) => ({
-                validator(_, value) {
-                  if (!value || getFieldValue('password') === value) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error(''));
-                },
-              }),
-            ]}
-          >
+            validateStatus={formState.repeatPassword && !formState.isRepeatPasswordValid? 'error' : 'success'}
+            validateTrigger='onChange'
+            help='Пароли не совпадают'>
             <Input.Password placeholder="Повторите пароль" onChange={(e)=> handleChangeRepeatPassword(e)}/>
           </Form.Item>
       </div>
       <div className={styles.button_container}>
         <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
-          <Button htmlType="submit" style={{width:'100%', background:`${isFormValid ? '#061178' : 'transparent'}`}} disabled={!isFormValid}>
+          <Button htmlType="submit" style={{width:'100%'}} className={isFormValid ? styles.enterButton : styles.disabledButton }>
             Войти
           </Button>
       </Form.Item>
@@ -171,8 +143,6 @@ const SingUp:React.FC = () => {
       </Form.Item>
       </div>
           
-
-
     </Form>
 
 }

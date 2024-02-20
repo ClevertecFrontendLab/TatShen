@@ -1,20 +1,27 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import { enterApi } from '../services/EnterService';
 import { userReducer } from '@redux/userReducer';
+import { createReduxHistoryContext } from 'redux-first-history';
+import { createBrowserHistory } from 'history';
+
+const {createReduxHistory, routerMiddleware, routerReducer} = createReduxHistoryContext({history: createBrowserHistory(), savePreviousLocations:1})
 
 
-const rootReducer = combineReducers({
-    [enterApi.reducerPath]: enterApi.reducer,
-    user: userReducer
-})
+export const store = configureStore({
 
-export const setupStore = () => {
-    return configureStore({
-        reducer: rootReducer,
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(enterApi.middleware)
+        reducer: combineReducers({
+            [enterApi.reducerPath]: enterApi.reducer,
+            user: userReducer,
+            router: routerReducer
+        }),
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(enterApi.middleware, routerMiddleware),
     })
-};
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>
-export type AppDispatch = AppStore['dispatch']
+
+
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+    
+export const history = createReduxHistory(store);
+    

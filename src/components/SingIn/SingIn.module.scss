@@ -1,25 +1,25 @@
 @import '../../styles/variables.scss';
 
-.input_container{
+.input_container {
     display: flex;
     flex-direction: column;
     gap: 16px;
     font-family: $font-family;
-    >div{
+    > div {
         margin: 0;
         min-height: 40px;
     }
 }
 
-.check_container{
+.check_container {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
     font-family: $font-family;
-    div{
+    div {
         margin: 0;
     }
-    .check_button{
+    .check_button, .check_button_disabled {
         min-height: 32px;
         font-weight: 400;
         font-size: 16px;
@@ -27,16 +27,20 @@
         text-align: center;
         color: $primary-light-6;
     }
+    .check_button_disabled{
+        pointer-events: none;
+    }
 }
 
-.button_container{
+.button_container {
     display: flex;
     flex-direction: column;
     gap: 16px;
     font-family: $font-family;
-    div{
+    div {
         margin: 0;
-        button{
+
+        button {
             height: 40px;
             font-weight: 400;
             font-size: 16px;
@@ -44,6 +48,109 @@
             text-align: center;
             color: $character-light-primary-inverse;
         }
+        .disabledButton{
+            border: 1px solid $character-light-border;
+            border-radius: 2px;
+            padding: 6px 15px;
+            width: 368px;
+            height: 40px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+            background: $character-light-background;
+            font-family: $font-family;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-disable-25;
+        }
+        .enterButton{
+            border: 1px solid $primary-light-6;
+            border-radius: 2px;
+            padding: 6px 15px;
+            width: 368px;
+            height: 40px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+            background: $primary-light-6;
+            font-family:$font-family;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-primary-inverse;
+        }
+    }
+}
+
+
+
+:global {
+    #basic_email:hover,
+    #basic_email:focus,
+    .ant-input:focus,
+    .ant-input-status-error {
+        border: none;
+        box-shadow: none !important;
+        transform: none;
+        border-left: 1px solid $character-light-border;
     }
 
+    .ant-input-group-wrapper {
+        border-radius: 2px;
+        box-shadow: none;
+    }
+
+
+    .ant-input-group-addon {
+        border: none;
+        border-right: 1px solid $character-light-border;
+    }
+
+    .ant-input-group-wrapper:hover,
+    .ant-input-group-wrapper:focus {
+        border: 1px solid $primary-light-5 ;
+        box-shadow: 0 0 0 2px rgba(47, 84, 235, 0.2);
+    }
+
+    .ant-input-group-wrapper-status-error, .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper, .ant-input-affix-wrapper-status-error:not(.ant-input-affix-wrapper-disabled):not(.ant-input-affix-wrapper-borderless).ant-input-affix-wrapper:hover {
+        border: 1px solid $character-light-error !important;
+        border-radius: 2px;
+        box-shadow: none !important;
+        [data-icon="eye"]{
+            fill:$character-light-secondary-45 !important
+        }
+    }
+
+    .ant-input .ant-input-status-error {
+        border: none !important;
+        border-right: 1px solid $character-light-border;
+    }
+
+    .ant-input-group-wrapper-status-error .ant-input-group-addon {
+        border: none !important;
+        border-right: 1px solid $character-light-border;
+    }
+
+    .ant-input-status-error:not(.ant-input-disabled):not(.ant-input-borderless).ant-input {
+        border: none !important;
+        border-left: 1px solid $character-light-border !important;
+    }
+
+    .ant-input-affix-wrapper .ant-input-password:hover, .ant-input-affix-wrapper .ant-input-password:focus{
+        border: 1px solid $primary-light-5 !important;
+        box-shadow: 0 0 0 2px rgba(47, 84, 235, 0.2) !important;
+    }
+
+    .ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{
+        border: 1px solid $primary-light-5 !important;
+        box-shadow: 0 0 0 2px rgba(47, 84, 235, 0.2) !important;
+    }
+
+    .ant-checkbox-checked .ant-checkbox-inner{
+        background-color: $primary-light-6 !important;
+        border-color: $primary-light-5 !important;
+    }
+
+    [data-icon="eye"]{
+        fill:$primary-light-6 !important
+    }
 }

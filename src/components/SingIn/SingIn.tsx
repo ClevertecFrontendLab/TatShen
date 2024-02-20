@@ -2,10 +2,9 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { useResize } from '@hooks/useResize';
-import debounce from '@utils/debounce';
 import { setLocalStorageItem, validateEmail, validatePassword } from '../../utils/index';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { setEmail, setPassword, setToken, setAuth } from '@redux/userReducer';
 
 import styles from './SingIn.module.scss';
@@ -15,28 +14,20 @@ import {
     useCheckEmailMutation,
 } from '../../services/EnterService';
 import { LOCAL_STORAGE } from '@constants/localStorage';
-import { CODE, ERROR_EMAIL, ERROR_LOGIN, ERROR_NETWORK, HOMEPAGE } from '@constants/router';
+import { CONFIRM_EMAIL, ERROR_EMAIL_NO_EXIST, ERROR_LOGIN, ERROR_NETWORK, HOMEPAGE } from '@constants/router';
 import { Loader } from '@components/Loader/Loader';
 import { IServerErrorResponse } from '../../types/enterTypes';
+import { IForm, initialFormState } from '@pages/auth-page/types';
 
-interface ISingInForm {
-    email: string;
-    password: string;
-    isEmailValid: boolean;
-    isPasswordValid: boolean;
-}
 
-const initialFormState: ISingInForm = {
-    email: '',
-    password: '',
-    isEmailValid: false,
-    isPasswordValid: false,
-};
 
 const SingIn: React.FC = () => {
-    const [formState, setFormState] = useState<ISingInForm>(initialFormState);
+    const [formState, setFormState] = useState<IForm>(initialFormState);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const location = useLocation()
+
+    const lastPage = location.state?.from.pathname
     const { email, password } = useAppSelector((state) => state.user);
     const [checkEmail, {
       isError: isErrorCheckEmail,
@@ -64,52 +55,48 @@ const SingIn: React.FC = () => {
     };
 
     const handlerRetrievalPassword = () => {
-      checkEmail({email:formState.email})
+      checkEmail({email})
     }
 
-    console.log(formState);
 
-    const handleChangeEmail = debounce((e: { target: { value: string } }) => {
+    const handleChangeEmail = (e: { target: { value: string } }) => {
         setFormState((formState) => ({
             ...formState,
             email: e.target.value,
             isEmailValid: validateEmail(e.target.value),
         }));
-    }, 1500);
+        dispatch(setEmail(e.target.value))
+    };
 
-    const handleChangePassword = debounce((e: { target: { value: string } }) => {
+    const handleChangePassword =(e: { target: { value: string } }) => {
         setFormState((formState) => ({
             ...formState,
             password: e.target.value,
             isPasswordValid: validatePassword(e.target.value),
         }));
-    }, 1500);
+        dispatch(setPassword(e.target.value))
+    };
 
     const isFormValid = formState.isEmailValid && formState.isPasswordValid;
 
     const defaultPrefixCls = 'e-mail:';
     const { width } = useResize();
 
-    useEffect(() => {
-        if (isFormValid) {
-            dispatch(setEmail(formState.email));
-            dispatch(setPassword(formState.password));
-        }
-    });
-
     useEffect(()=> {
       if(isSuccessCheckEmail){
-        navigate(CODE)
+        navigate(CONFIRM_EMAIL, {state: {from:location}})
+      } else if (isErrorCheckEmail && checkEmailError){
+        if((checkEmailError as IServerErrorResponse).status.toString() === '404' && (checkEmailError as IServerErrorResponse).data.message == 'Email не найден'){
+          navigate(`/result/${ERROR_EMAIL_NO_EXIST}`)
+        } else { navigate( `/result/${ERROR_NETWORK}`)}
       }
-    }, [isSuccessCheckEmail, navigate])
+    }, [checkEmailError, isErrorCheckEmail, isSuccessCheckEmail, location, navigate])
 
-    useEffect(()=> {
-      if(isErrorCheckEmail && checkEmailError){
-        if((checkEmailError as IServerErrorResponse).status === '404' && (checkEmailError as IServerErrorResponse).data.message === 'Email не найден'){
-          navigate(ERROR_EMAIL)
-        } else { navigate(ERROR_NETWORK)}
-      }
-    }, [checkEmailError, isErrorCheckEmail, navigate])
+   useEffect(()=> {
+        if(lastPage === '/result/error-check-email'){
+            checkEmail({email})
+        }
+   }, [checkEmail, email, lastPage])
 
     useEffect(() => {
         if (isLoadingLogin || isLoadingCheckEmail) {
@@ -123,14 +110,9 @@ const SingIn: React.FC = () => {
             dispatch(setAuth(true));
             rememberMe && setLocalStorageItem(LOCAL_STORAGE, loginData.accessToken);
             navigate(HOMEPAGE);
-        }
-    }, [dispatch, isSuccessLogin, loginData, navigate, rememberMe]);
+        } else if(isErrorLogin){ navigate(`/result/${ERROR_LOGIN}`)}
+    }, [dispatch, isErrorLogin, isSuccessLogin, loginData, navigate, rememberMe]);
 
-    useEffect(() => {
-        if (isErrorLogin) {
-            navigate(ERROR_LOGIN);
-        }
-    }, [isErrorLogin, navigate]);
 
     return (
         <Form
@@ -142,15 +124,9 @@ const SingIn: React.FC = () => {
             <div className={styles.input_container}>
                 <Form.Item
                     name='email'
-                    rules={[
-                        {
-                            type: 'email',
-                        },
-                        {
-                            required: false,
-                        },
-                    ]}
-                    help=''
+                    validateStatus={formState.email && !formState.isEmailValid ? 'error' : 'success'}
+                    validateTrigger='onChange'
+                    
                 >
                     <Input
                         addonBefore={defaultPrefixCls}
@@ -159,7 +135,8 @@ const SingIn: React.FC = () => {
                     />
                 </Form.Item>
 
-                <Form.Item name='password' rules={[{ required: false }]}>
+                <Form.Item name='password' validateStatus={formState.password && !formState.isPasswordValid? 'error' : 'success'}
+                    validateTrigger='onChange'>
                     <Input.Password onChange={(e) => handleChangePassword(e)} />
                 </Form.Item>
             </div>
@@ -172,16 +149,15 @@ const SingIn: React.FC = () => {
                 >
                     <Checkbox onChange={() => setRememberMe(!rememberMe)}>Запомнить меня</Checkbox>
                 </Form.Item>
-                <button className={styles.check_button} onClick={handlerRetrievalPassword}>Забыли пароль?</button>
+                <button className={formState.isEmailValid ? styles.check_button : styles.check_button_disabled } onClick={handlerRetrievalPassword}>Забыли пароль?</button>
             </div>
 
             <div className={styles.button_container}>
                 <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
                     <Button
-                        type='primary'
                         htmlType='submit'
                         style={{ width: '100%' }}
-                        disabled={!isFormValid}
+                        className={isFormValid ? styles.enterButton : styles.disabledButton }
                         onClick={handlerLogin}
                     >
                         Войти
