@@ -12,4 +12,6 @@ export const RESULT_ERROR = 'error'
 export const ERROR_USER_EXIST = 'error-user-exist'
 export const ERROR_EMAIL_NO_EXIST = 'error-check-email-no-exist';
 export const ERROR_UNKNOWN = 'error-unknown';
-export const ERROR_NETWORK = 'error-check-email'
+export const ERROR_CHECK_EMAIL = 'error-check-email'
+export const SUCCESS_CHANGE_PASSWORD = 'success-change-password'
+export const ERROR_CHANGE_PASSWORD = 'error-change-password'

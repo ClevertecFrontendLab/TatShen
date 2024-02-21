@@ -1,14 +1,17 @@
 import Modal from '@components/Modal/Modal';
 import React from 'react';
 import styles from '../result-page.module.scss';
-import { Button } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons';
-import { REGISTRATION } from '@constants/router';
+import { Button } from 'antd';
+import {  CHANGE_PASSWORD } from '@constants/router';
 import {  useLocation, useNavigate } from 'react-router-dom';
 
-const Error: React.FC = () => {
-    const navigate = useNavigate()
+const ErrorChangePassword: React.FC = () => {
     const location = useLocation()
+    const navigate = useNavigate()
+    const handleClick = () => {
+        navigate(`/auth/ ${CHANGE_PASSWORD}`, {state:{from: location.pathname}})
+    }
     return (
         <Modal className={styles.container}>
             <div className={styles.content}>
@@ -16,15 +19,13 @@ const Error: React.FC = () => {
                 <div className={styles.text_content} style={{ padding: '0px' }}>
                     <h2>Данные не сохранились</h2>
                     <span className={styles.error_user_exist}>
-                        Что-то пошло не так и ваша регистрация не завершилась. Попробуйте ещё раз.
+                        Что-то пошло не так. попробуйте еще раз
                     </span>
                 </div>
-                <Button style={{ width: '100%' }} onClick={()=> navigate(`/auth/${REGISTRATION}`, {state:{from : location.pathname}})} data-test-id='registration-retry-button'>
-                    Повторить
-                </Button>
+                <Button style={{ width: '100%' }} onClick={handleClick} data-test-id='change-retry-button'>Повторить</Button>
             </div>
         </Modal>
     );
 };
 
-export default Error;
+export default ErrorChangePassword;

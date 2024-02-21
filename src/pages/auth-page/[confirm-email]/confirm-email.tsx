@@ -9,6 +9,7 @@ import { setCode } from '@redux/userReducer';
 import { Loader } from '@components/Loader/Loader';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AUTH, CHANGE_PASSWORD } from '@constants/router';
+import { setIsLoading } from '@redux/loaderReducer';
 
 
 const Code: React.FC = () => {
@@ -26,15 +27,14 @@ const Code: React.FC = () => {
             isError: isErrorConfirmEmail,
             isLoading: isLoadingConfirmEmail,
             isSuccess: isSiccessConfirmEmail,
-            error: confirmEmailError,
         },
     ] = useConfirmEmailMutation();
 
 
     const handleOnChange = (e: string) => {
-        dispatch(setCode(e));
-        if (code.length == 6) {
-            confirmEmail({ email, code });
+        if (e.length == 6) {
+            dispatch(setCode(e));
+            confirmEmail({ email, code:e });
         }
     };
 
@@ -48,15 +48,15 @@ const Code: React.FC = () => {
         if (isErrorConfirmEmail) {
             setModalState(false);
         } else if(isSiccessConfirmEmail){
-            navigate(CHANGE_PASSWORD)
+            navigate(`/auth/${CHANGE_PASSWORD}`)
         }
     }, [isErrorConfirmEmail, isSiccessConfirmEmail, navigate]);
 
     useEffect(() => {
         if (isLoadingConfirmEmail) {
-            <Loader></Loader>;
-        }
-    }, [isLoadingConfirmEmail]);
+            dispatch(setIsLoading(true))
+        } else dispatch(setIsLoading(false))
+    }, [dispatch, isLoadingConfirmEmail]);
 
     return (
         <Modal className={styles.code_container}>
@@ -81,7 +81,8 @@ const Code: React.FC = () => {
                         его в поле ниже.
                     </span>
                 </div>
-                {modalState ? <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  /> : <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  classNames={{ container: "Error_container"}} /> } 
+                {modalState ? <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  inputProps={{
+                'data-test-id': 'verification-input'}}/> : <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  classNames={{ container: "Error_container"}}  inputProps={{'data-test-id': 'verification-input'}}/> } 
                 <span className={styles.letter}>Не пришло письмо? Проверьте папку Спам.</span>
             </div>
         </Modal>

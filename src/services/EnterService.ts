@@ -71,11 +71,11 @@ export const enterApi = createApi({
                 credentials: 'include',
             }),
         }),
-        changePassword: builder.mutation<{ message: string }, { password: string }>({
+        changePassword: builder.mutation<{ message: string }, { password: string; confirmPassword: string }>({
             query: (body) => ({
                 url: '/change-password',
                 method: 'POST',
-                body: { password: body.password, confirmPassword: body.password },
+                body,
                 credentials: 'include',
             }),
         }),

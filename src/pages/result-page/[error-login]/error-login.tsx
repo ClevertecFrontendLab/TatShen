@@ -15,7 +15,7 @@ const ErrorLogin:React.FC = () => {
                 <h2>Вход не выполнен</h2>
                 <span >Что-то пошло не так. Попробуйте еще раз</span>
             </div>
-            <Button style={{width:'100%'}} onClick={()=>navigate(AUTH)}>Повторить</Button>
+            <Button style={{width:'100%'}} onClick={()=>navigate(AUTH)} data-test-id='login-retry-button'>Повторить</Button>
         </div>
        
     </Modal>

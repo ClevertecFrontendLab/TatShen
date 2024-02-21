@@ -5,17 +5,28 @@ import styles from './change-password.module.scss';
 
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePasswordMutation } from '../../../services/EnterService';
-import { setCode, setPassword } from '@redux/userReducer';
+import { setPassword } from '@redux/userReducer';
 import { Loader } from '@components/Loader/Loader';
 import { Button, Form, Input } from 'antd';
 import { IChangePasswordForm, initialChangePasswordFormState } from '../types';
 import { validatePassword } from '@utils/index';
+import { ERROR_CHANGE_PASSWORD, SUCCESS_CHANGE_PASSWORD } from '@constants/router';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { setIsLoading } from '@redux/loaderReducer';
 
 const ChangePassword: React.FC = () => {
     const [formState, setFormState] = useState<IChangePasswordForm>(initialChangePasswordFormState) 
-    const {email} = useAppSelector(state => state.user)
+    const {password} = useAppSelector(state => state.user)
+    const [changePassword, {
+        isError: isChangePaswordError,
+        isLoading: isChangePasswordLoading,
+        isSuccess: isChangePasswordSuccess,
+      }] = useChangePasswordMutation()
     
     const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+    const lastPage = location.state?.from.pathname
   
     const handleChangePassword = (e: { target: { value: string; }; }) => { setFormState(formState => ({
         ...formState, 
@@ -25,7 +36,6 @@ const ChangePassword: React.FC = () => {
       
       }
 
-  
       const handleChangeRepeatPassword = (e: { target: { value: string; }; }) => { setFormState(formState => ({
         ...formState, 
         repeatPassword: e.target.value,
@@ -34,7 +44,27 @@ const ChangePassword: React.FC = () => {
       dispatch(setPassword(e.target.value))
       }
 
-   
+      const handleSubmit = () => {
+        changePassword({password:password, confirmPassword: password})
+      }
+
+      useEffect(()=> {
+        if (isChangePasswordLoading){
+            dispatch(setIsLoading(true))
+        } else if(isChangePasswordSuccess){
+            dispatch(setIsLoading(false))
+            navigate(`/result/${SUCCESS_CHANGE_PASSWORD}`)
+        } else if (isChangePaswordError){
+            dispatch(setIsLoading(false))
+            navigate(`/result/${ERROR_CHANGE_PASSWORD}`)
+        }
+      }, [dispatch, isChangePasswordLoading, isChangePasswordSuccess, isChangePaswordError, location, navigate])
+     
+      useEffect(()=> {
+        if(lastPage === '/result/error-change-password'){
+            changePassword({password:password, confirmPassword: password})
+        }
+      })
     return (
         <Modal className={styles.code_container}>
             <div className={styles.content}>
@@ -51,7 +81,7 @@ const ChangePassword: React.FC = () => {
                             name="password"
                             validateStatus={formState.password && !formState.isPasswordValid? 'error' : 'success'}
                             validateTrigger='onChange'>
-                            <Input.Password placeholder="Пароль" onChange={(e)=> handleChangePassword(e)}/>
+                            <Input.Password placeholder="Пароль" onChange={(e)=> handleChangePassword(e)} data-test-id='change-password'/>
                         </Form.Item>
 
                         <Form.Item
@@ -60,12 +90,12 @@ const ChangePassword: React.FC = () => {
                             validateStatus={formState.repeatPassword && !formState.isRepeatPasswordValid? 'error' : 'success'}
                             validateTrigger='onChange'
                             help='Пароли не совпадают'>
-                            <Input.Password placeholder="Повторите пароль" onChange={(e)=> handleChangeRepeatPassword(e)}/>
+                            <Input.Password placeholder="Повторите пароль" onChange={(e)=> handleChangeRepeatPassword(e)} data-test-id='change-confirm-password'/>
                         </Form.Item>
                     </div>
                     
                     <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
-                        <Button style={{width:'100%'}} htmlType="submit" onClick={}>
+                        <Button style={{width:'100%'}} htmlType="submit" onClick={handleSubmit} data-test-id='change-submit-button'>
                         Сохранить
                         </Button>
                     </Form.Item>

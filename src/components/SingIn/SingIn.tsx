@@ -9,26 +9,24 @@ import { setEmail, setPassword, setToken, setAuth } from '@redux/userReducer';
 
 import styles from './SingIn.module.scss';
 import {
-    useLoginWithGoogleQuery,
     useLoginMutation,
     useCheckEmailMutation,
 } from '../../services/EnterService';
 import { LOCAL_STORAGE } from '@constants/localStorage';
 import { CONFIRM_EMAIL, ERROR_EMAIL_NO_EXIST, ERROR_LOGIN, ERROR_NETWORK, HOMEPAGE } from '@constants/router';
-import { Loader } from '@components/Loader/Loader';
 import { IServerErrorResponse } from '../../types/enterTypes';
 import { IForm, initialFormState } from '@pages/auth-page/types';
+import { setIsLoading } from '@redux/loaderReducer';
 
 
 
 const SingIn: React.FC = () => {
-    const [formState, setFormState] = useState<IForm>(initialFormState);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation()
-
+    const [formState, setFormState] = useState<IForm>(initialFormState);
     const lastPage = location.state?.from.pathname
-    const { email, password } = useAppSelector((state) => state.user);
+    const { email, password } = useAppSelector((state) => state.user); 
     const [checkEmail, {
       isError: isErrorCheckEmail,
       isLoading: isLoadingCheckEmail,
@@ -100,9 +98,9 @@ const SingIn: React.FC = () => {
 
     useEffect(() => {
         if (isLoadingLogin || isLoadingCheckEmail) {
-            <Loader></Loader>;
-        }
-    }, [isLoadingCheckEmail, isLoadingLogin]);
+            dispatch(setIsLoading(true))
+        } else (dispatch(setIsLoading(false)))
+    }, [dispatch, isLoadingCheckEmail, isLoadingLogin]);
 
     useEffect(() => {
         if (isSuccessLogin && loginData && 'accessToken' in loginData) {
@@ -132,12 +130,13 @@ const SingIn: React.FC = () => {
                         addonBefore={defaultPrefixCls}
                         style={{ width: '100%' }}
                         onChange={(e) => handleChangeEmail(e)}
+                        data-test-id='login-email'
                     />
                 </Form.Item>
 
                 <Form.Item name='password' validateStatus={formState.password && !formState.isPasswordValid? 'error' : 'success'}
                     validateTrigger='onChange'>
-                    <Input.Password onChange={(e) => handleChangePassword(e)} />
+                    <Input.Password onChange={(e) => handleChangePassword(e)} data-test-id='login-password'/>
                 </Form.Item>
             </div>
 
@@ -147,9 +146,9 @@ const SingIn: React.FC = () => {
                     valuePropName='checked'
                     wrapperCol={{ offset: 0, span: 24 }}
                 >
-                    <Checkbox onChange={() => setRememberMe(!rememberMe)}>Запомнить меня</Checkbox>
+                    <Checkbox onChange={() => setRememberMe(!rememberMe)} data-test-id='login-remember'>Запомнить меня</Checkbox>
                 </Form.Item>
-                <button className={formState.isEmailValid ? styles.check_button : styles.check_button_disabled } onClick={handlerRetrievalPassword}>Забыли пароль?</button>
+                <button className={formState.isEmailValid ? styles.check_button : styles.check_button_disabled } onClick={handlerRetrievalPassword} data-test-id='login-forgot-button'>Забыли пароль?</button>
             </div>
 
             <div className={styles.button_container}>
@@ -159,6 +158,7 @@ const SingIn: React.FC = () => {
                         style={{ width: '100%' }}
                         className={isFormValid ? styles.enterButton : styles.disabledButton }
                         onClick={handlerLogin}
+                        data-test-id='login-submit-button'
                     >
                         Войти
                     </Button>

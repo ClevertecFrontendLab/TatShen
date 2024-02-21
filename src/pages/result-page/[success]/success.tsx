@@ -3,6 +3,8 @@ import React from 'react';
 import styles from '../result-page.module.scss';
 import { CheckCircleFilled} from '@ant-design/icons';
 import { Button } from 'antd';
+import { AUTH } from '@constants/router';
+import { Link } from 'react-router-dom';
 
 const Success: React.FC = () => {
     return (
@@ -16,8 +18,8 @@ const Success: React.FC = () => {
                         пароль.
                     </span>
                 </div>
-                <Button  style={{ width: '100%' }}>
-                    Войти
+                <Button  style={{ width: '100%' }} data-test-id='registration-enter-button'>
+                    <Link to={AUTH}> Вoйти</Link>
                 </Button>
             </div>
         </Modal>

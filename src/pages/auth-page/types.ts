@@ -18,9 +18,9 @@ export  const initialFormState: IForm ={
 
   export interface IChangePasswordForm{
     password: string;
-    repeatPassword?: string;
+    repeatPassword: string;
     isPasswordValid: boolean;
-    isRepeatPasswordValid?: boolean
+    isRepeatPasswordValid: boolean
   }
 
 

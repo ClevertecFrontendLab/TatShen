@@ -17,7 +17,7 @@ const ErrorEmailNoExist: React.FC = () => {
                         Мы не нашли в базе вашего e-mail. Попробуйте <br/>войти с другим e-mail.
                     </span>
                 </div>
-                <Button style={{ width: '100%' }}><Link to={AUTH}>Попробовать снова</Link></Button>
+                <Button style={{ width: '100%' }} data-test-id='check-retry-button'><Link to={AUTH}>Попробовать снова</Link></Button>
             </div>
         </Modal>
     );
