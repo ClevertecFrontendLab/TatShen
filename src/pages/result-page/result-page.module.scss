@@ -145,3 +145,9 @@
         }
     }
 }
+
+:global{
+    .ant-btn:hover, .ant-btn:focus{
+        background-color: $primary-light-6;
+    }
+}

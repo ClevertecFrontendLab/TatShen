@@ -27,9 +27,6 @@
         text-align: center;
         color: $primary-light-6;
     }
-    .check_button_disabled{
-        pointer-events: none;
-    }
 }
 
 .button_container {
@@ -47,21 +44,6 @@
             line-height: 130%;
             text-align: center;
             color: $character-light-primary-inverse;
-        }
-        .disabledButton{
-            border: 1px solid $character-light-border;
-            border-radius: 2px;
-            padding: 6px 15px;
-            width: 368px;
-            height: 40px;
-            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
-            background: $character-light-background;
-            font-family: $font-family;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 130%;
-            text-align: center;
-            color: $character-light-disable-25;
         }
         .enterButton{
             border: 1px solid $primary-light-6;

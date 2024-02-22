@@ -8,8 +8,8 @@ import exit from '../../assets/exit.svg';
 import calendar from '../../assets/calendar.svg'
 const { Sider } = Layout;
 import { useResize } from '@hooks/useResize';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { Link, useNavigate } from 'react-router-dom';
+import { useAppDispatch} from '@hooks/typed-react-redux-hooks';
+import {  useNavigate } from 'react-router-dom';
 import { removeLocalStorageItem } from '@utils/index';
 import { setAuth, setCode, setEmail, setPassword, setToken } from '@redux/userReducer';
 import { LOCAL_STORAGE } from '@constants/localStorage';

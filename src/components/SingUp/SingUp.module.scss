@@ -39,6 +39,7 @@
             line-height: 130%;
             text-align: center;
             color: $character-light-disable-25;
+            pointer-events: none;
         }
         .enterButton{
             border: 1px solid $primary-light-6;

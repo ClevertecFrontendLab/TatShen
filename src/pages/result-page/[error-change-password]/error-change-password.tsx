@@ -6,11 +6,13 @@ import { Button } from 'antd';
 import {  CHANGE_PASSWORD } from '@constants/router';
 import {  useLocation, useNavigate } from 'react-router-dom';
 
+
 const ErrorChangePassword: React.FC = () => {
     const location = useLocation()
     const navigate = useNavigate()
+    
     const handleClick = () => {
-        navigate(`/auth/ ${CHANGE_PASSWORD}`, {state:{from: location.pathname}})
+        navigate(`/auth/${CHANGE_PASSWORD}`, {state:{from: location}})
     }
     return (
         <Modal className={styles.container}>

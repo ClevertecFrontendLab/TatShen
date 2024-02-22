@@ -6,7 +6,6 @@ import styles from './change-password.module.scss';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useChangePasswordMutation } from '../../../services/EnterService';
 import { setPassword } from '@redux/userReducer';
-import { Loader } from '@components/Loader/Loader';
 import { Button, Form, Input } from 'antd';
 import { IChangePasswordForm, initialChangePasswordFormState } from '../types';
 import { validatePassword } from '@utils/index';
@@ -16,7 +15,7 @@ import { setIsLoading } from '@redux/loaderReducer';
 
 const ChangePassword: React.FC = () => {
     const [formState, setFormState] = useState<IChangePasswordForm>(initialChangePasswordFormState) 
-    const {password} = useAppSelector(state => state.user)
+    const {password} = useAppSelector((state) => state.user)
     const [changePassword, {
         isError: isChangePaswordError,
         isLoading: isChangePasswordLoading,
@@ -41,10 +40,10 @@ const ChangePassword: React.FC = () => {
         repeatPassword: e.target.value,
         isRepeatPasswordValid:validatePassword(e.target.value) && formState.password === e.target.value 
       }))
-      dispatch(setPassword(e.target.value))
       }
 
       const handleSubmit = () => {
+        dispatch(setPassword(formState.password))
         changePassword({password:password, confirmPassword: password})
       }
 
@@ -64,7 +63,7 @@ const ChangePassword: React.FC = () => {
         if(lastPage === '/result/error-change-password'){
             changePassword({password:password, confirmPassword: password})
         }
-      })
+      },[changePassword, lastPage, password])
     return (
         <Modal className={styles.code_container}>
             <div className={styles.content}>

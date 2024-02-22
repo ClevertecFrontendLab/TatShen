@@ -13,7 +13,7 @@ import {
     useCheckEmailMutation,
 } from '../../services/EnterService';
 import { LOCAL_STORAGE } from '@constants/localStorage';
-import { CONFIRM_EMAIL, ERROR_EMAIL_NO_EXIST, ERROR_LOGIN, ERROR_NETWORK, HOMEPAGE } from '@constants/router';
+import { CONFIRM_EMAIL, ERROR_CHECK_EMAIL, ERROR_EMAIL_NO_EXIST, ERROR_LOGIN,  HOMEPAGE } from '@constants/router';
 import { IServerErrorResponse } from '../../types/enterTypes';
 import { IForm, initialFormState } from '@pages/auth-page/types';
 import { setIsLoading } from '@redux/loaderReducer';
@@ -43,9 +43,11 @@ const SingIn: React.FC = () => {
             data: loginData,
         },
     ] = useLoginMutation();
+    const isFormValid = formState.isEmailValid && formState.isPasswordValid
+
 
     const handlerLogin = () => {
-        login({ email, password });
+        if(isFormValid){login({ email, password })}
     };
 
     const handlerLoginWithGoogle = () => {
@@ -53,7 +55,9 @@ const SingIn: React.FC = () => {
     };
 
     const handlerRetrievalPassword = () => {
-      checkEmail({email})
+        if(formState.isEmailValid){
+            checkEmail({email})
+        }
     }
 
 
@@ -75,8 +79,7 @@ const SingIn: React.FC = () => {
         dispatch(setPassword(e.target.value))
     };
 
-    const isFormValid = formState.isEmailValid && formState.isPasswordValid;
-
+    
     const defaultPrefixCls = 'e-mail:';
     const { width } = useResize();
 
@@ -86,7 +89,7 @@ const SingIn: React.FC = () => {
       } else if (isErrorCheckEmail && checkEmailError){
         if((checkEmailError as IServerErrorResponse).status.toString() === '404' && (checkEmailError as IServerErrorResponse).data.message == 'Email не найден'){
           navigate(`/result/${ERROR_EMAIL_NO_EXIST}`)
-        } else { navigate( `/result/${ERROR_NETWORK}`)}
+        } else { navigate( `/result/${ERROR_CHECK_EMAIL}`)}
       }
     }, [checkEmailError, isErrorCheckEmail, isSuccessCheckEmail, location, navigate])
 
@@ -148,7 +151,7 @@ const SingIn: React.FC = () => {
                 >
                     <Checkbox onChange={() => setRememberMe(!rememberMe)} data-test-id='login-remember'>Запомнить меня</Checkbox>
                 </Form.Item>
-                <button className={formState.isEmailValid ? styles.check_button : styles.check_button_disabled } onClick={handlerRetrievalPassword} data-test-id='login-forgot-button'>Забыли пароль?</button>
+                <button className={styles.check_button} onClick={handlerRetrievalPassword} data-test-id='login-forgot-button'>Забыли пароль?</button>
             </div>
 
             <div className={styles.button_container}>
@@ -156,12 +159,10 @@ const SingIn: React.FC = () => {
                     <Button
                         htmlType='submit'
                         style={{ width: '100%' }}
-                        className={isFormValid ? styles.enterButton : styles.disabledButton }
+                        className={ styles.enterButton}
                         onClick={handlerLogin}
                         data-test-id='login-submit-button'
-                    >
-                        Войти
-                    </Button>
+                    > Войти </Button>
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
                     <Button

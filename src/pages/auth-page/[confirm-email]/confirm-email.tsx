@@ -6,15 +6,15 @@ import VerificationInput from 'react-verification-input';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useConfirmEmailMutation } from '../../../services/EnterService';
 import { setCode } from '@redux/userReducer';
-import { Loader } from '@components/Loader/Loader';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AUTH, CHANGE_PASSWORD } from '@constants/router';
 import { setIsLoading } from '@redux/loaderReducer';
 
 
 const Code: React.FC = () => {
-    const { email, code } = useAppSelector((state) => state.user);
+    const { email } = useAppSelector((state) => state.user);
     const location = useLocation();
+    const [value, setValue] = useState('')
     const [modalState, setModalState] = useState(true);
     const lastPage = location.state?.from.pathname;
 
@@ -32,9 +32,11 @@ const Code: React.FC = () => {
 
 
     const handleOnChange = (e: string) => {
+        setValue(e)
         if (e.length == 6) {
             dispatch(setCode(e));
             confirmEmail({ email, code:e });
+            setValue('')
         }
     };
 
@@ -81,8 +83,10 @@ const Code: React.FC = () => {
                         его в поле ниже.
                     </span>
                 </div>
-                {modalState ? <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  inputProps={{
-                'data-test-id': 'verification-input'}}/> : <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  classNames={{ container: "Error_container"}}  inputProps={{'data-test-id': 'verification-input'}}/> } 
+                {modalState ? 
+                <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  inputProps={{
+                'data-test-id': 'verification-input'}}/> : 
+                <VerificationInput placeholder='' onChange={(e) => handleOnChange(e)}  classNames={{ container: "Error_container"}}  inputProps={{'data-test-id': 'verification-input'}} value={value}/> } 
                 <span className={styles.letter}>Не пришло письмо? Проверьте папку Спам.</span>
             </div>
         </Modal>
