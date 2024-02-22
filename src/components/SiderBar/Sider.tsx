@@ -8,10 +8,28 @@ import exit from '../../assets/exit.svg';
 import calendar from '../../assets/calendar.svg'
 const { Sider } = Layout;
 import { useResize } from '@hooks/useResize';
+import { useAppDispatch} from '@hooks/typed-react-redux-hooks';
+import {  useNavigate } from 'react-router-dom';
+import { removeLocalStorageItem } from '@utils/index';
+import { setAuth, setCode, setEmail, setPassword, setToken } from '@redux/userReducer';
+import { LOCAL_STORAGE } from '@constants/localStorage';
+import { AUTH } from '@constants/router';
 
 const SiderBar: React.FC = () => {
     const [collapsed, setCollapsed] = useState(false);
-     const {width} = useResize()
+    const {width} = useResize()
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+
+    const handlerExist = () => {
+        removeLocalStorageItem(LOCAL_STORAGE)
+        dispatch(setEmail(''))
+        dispatch(setPassword(''))
+        dispatch(setAuth(false))
+        dispatch(setCode(''))
+        dispatch(setToken(''))
+        navigate(AUTH)
+    }
     
     const handlerCollapsed = () => {
         setCollapsed(!collapsed)
@@ -48,7 +66,7 @@ const SiderBar: React.FC = () => {
                         },
                     ]}
                 ></Menu>
-                <Button className={ styles.button_open} style={{height:'40px', boxShadow: ' inset 0 1px 0 0  rgba(0, 0, 0, 0.15)'}}>
+                <Button className={ styles.button_open} style={{height:'40px', boxShadow: ' inset 0 1px 0 0  rgba(0, 0, 0, 0.15)'}} onClick={handlerExist}>
                     <img src={exit} alt='exit' className={styles.exit}/>
                     { collapsed ? '' : <span>Выход</span>}
                 </Button>

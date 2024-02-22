@@ -5,13 +5,17 @@ import { Outlet } from "react-router-dom";
 import Header_TS from "@components/Header/Header";
 import Footer_TS from "@components/Footer/Footer";
 import background from './assets/background.jpg'
+import { Loader } from "@components/Loader/Loader";
+import { useAppSelector } from "./hooks";
 
 
 const App: React.FC = () => {
+    const {isLoading} = useAppSelector((state) => state.loader)
     return (<Layout style={{backgroundSize:'cover' ,backgroundPosition: 'center', backgroundImage: `url(${background})`, minHeight:'100vh', height:'100%', maxWidth:'1440px'}}>
             <SiderBar/>
             <Layout style={{background: 'transparent', gap:'24'}} >
                 <Header_TS/>
+                <Loader isLoading= {isLoading}></Loader>
                     <Outlet/>
                 <Footer_TS />              
             </Layout>

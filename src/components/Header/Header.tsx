@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Breadcrumb, Button, Layout, Typography } from 'antd';
 import styles from './header.module.scss';
 import { SettingOutlined } from '@ant-design/icons/lib/icons';

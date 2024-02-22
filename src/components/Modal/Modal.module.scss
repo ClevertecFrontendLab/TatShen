@@ -1,0 +1,35 @@
+@import '../../styles/variables.scss';
+
+.modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+    background: $character-light-primary-inverse;
+    top: 50%;
+    left: 50%;
+    transform:translate(-50%,-50%);
+    gap: 48px;
+}
+
+.modal_logo{
+    width: 309px;
+    height: 76px;
+}
+
+@media (width<600px){
+    .modal{
+        border-radius: 2px;
+        padding: 32px 16px;
+        width: 328px;
+        height: 612px;
+    }
+
+    .modal_logo{
+        width: 203px;
+        height: 50px;
+    }
+}

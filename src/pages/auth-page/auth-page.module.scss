@@ -1,0 +1,75 @@
+@import '../../styles/variables.scss';
+
+.enter_modal {
+    border-radius: 2px;
+    padding: 64px 32px;
+    width: 539px;
+    height: 742px;
+}
+
+.modal_content {
+    display: flex;
+    flex-direction: column;
+    width: 368px;
+    height: 380px;
+    align-items: center;
+    gap: 24px;
+
+    form {
+        width: 368px;
+        height: 434px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+}
+
+.button_container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.button {
+    width: 184px;
+    height: 46px;
+    span {
+        padding: 16px 0px;
+        width: 39px;
+        height: 46px;
+        font-family: $font-family;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 130%;
+        color: $character-light-title-85;
+    }
+}
+
+.auth_user {
+    border-bottom: 2px solid$primary-light-6;
+    span {
+        color: $primary-light-6;
+    }
+}
+
+@media (width<600px) {
+    .enter_modal {
+        border-radius: 2px;
+        padding: 32px 16px;
+        width: 328px;
+        height: 612px;
+    }
+    .modal_content {
+        form {
+            width: 296px;
+            height: 374px;
+        }
+    }
+    .button_container {
+        justify-content: center;
+    }
+    .button {
+        width: 148px;
+        height: 46px;
+    }
+}

@@ -1,0 +1,153 @@
+@import '../../styles/variables.scss';
+
+.container {
+    border-radius: 2px;
+    padding: 64px 32px;
+    width: 539px;
+    height: 345px;
+    font-family: $font-family;
+    
+}
+.code_container{
+    border-radius: 2px;
+    padding: 64px 32px 56px 32px;
+    width: 539px;
+    height: 428px;
+}
+.error_container{
+    border-radius: 2px;
+    padding: 64px 32px 56px 32px;
+    width: 539px;
+    height: 550px;
+    .content{
+        width: 475px;
+        height: 430px;
+
+        img{
+            width: 255px;
+            height: 295px;
+        }
+    }
+}
+.content{
+    width: 368px;
+    height: 217px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    .icon{
+        svg{
+            width: 71px;
+            height: 62px;
+        }
+    }
+    h2{ 
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 130%;
+        text-align: center;
+        color: $character-light-title-85;
+        margin-bottom: 0;
+    }
+    span{
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        text-align: center;
+        color: $character-light-secondary-45;
+        align-items: center;
+    }
+
+    button{
+        border: 1px solid $primary-light-6;
+        background-color: $primary-light-6;
+        border-radius: 2px;
+        padding: 4px 15px;
+        width: 100%;
+        height: 40px;
+        a, span{
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-primary-inverse !important;
+        }
+    }
+    .text_content{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .code{
+        display: flex;
+        gap: 12px;
+        >input{
+            border: 1px solid $character-light-border;
+            border-radius: 2px;
+            padding: 5px 12px;
+            width: 40px;
+            height: 40px;
+        }
+    }
+
+    
+}
+
+
+@media (width < 600px){
+    .container{
+        border-radius: 2px;
+        padding: 32px 16px;
+        width: 328px;
+        height: 317px;
+    }
+
+    .code_container{
+        border-radius: 2px;
+        padding: 32px;
+        width: 328px;
+        height: 457px;
+    }
+
+    .content{
+        width: 296px;
+        height: 253px;
+    }
+
+    .text_content{
+        padding: 2px 18px;
+    }
+
+    .error_user_exist{
+        padding: 2px 20px;
+    }
+    .code{
+        gap: 8px;
+    }
+    .letter{
+        padding: 0 30px;
+    }
+
+    .error_container{
+        border-radius: 2px;
+        padding: 64px 32px 56px 32px;
+        width: 328px;
+        height: 568px;
+        .content{
+            width: 264px;
+            height: 448px;
+
+            img{
+                width: 254px;
+                height: 294px;
+            }
+        }
+    }
+}
+
+:global{
+    .ant-btn:hover, .ant-btn:focus{
+        background-color: $primary-light-6;
+    }
+}

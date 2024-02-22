@@ -6,9 +6,13 @@ import Card_TS from '@components/Card/Card';
 import {HeartFilled, IdcardOutlined } from '@ant-design/icons';
 import calendar from '../../assets/calendar-light.svg'
 import { useResize } from '@hooks/useResize';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 export const MainPage: React.FC = () => {
     const {width} = useResize()
+    const {isAuth, token} = useAppSelector(state => state.user)
+    console.log(isAuth, token);
+    
     return (
         <main className={styles.main}>
             <div className={styles.mainContent}>
