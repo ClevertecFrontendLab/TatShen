@@ -4,6 +4,8 @@ import { userReducer } from '@redux/userReducer';
 import { createReduxHistoryContext } from 'redux-first-history';
 import { createBrowserHistory } from 'history';
 import { loaderReducer } from '@redux/loaderReducer';
+import { feedbacksReducer } from '@redux/feedbacksReducer';
+import { feedbacksApi } from '../services/FeedbacksService';
 
 const {createReduxHistory, routerMiddleware, routerReducer} = createReduxHistoryContext({history: createBrowserHistory(), savePreviousLocations:1})
 
@@ -14,9 +16,11 @@ export const store = configureStore({
             [enterApi.reducerPath]: enterApi.reducer,
             user: userReducer,
             router: routerReducer,
-            loader: loaderReducer
+            loader: loaderReducer,
+            feedbacks: feedbacksReducer,
+            [feedbacksApi.reducerPath]:feedbacksApi.reducer
         }),
-        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(enterApi.middleware, routerMiddleware),
+        middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(enterApi.middleware, routerMiddleware, feedbacksApi.middleware),
     })
 
 

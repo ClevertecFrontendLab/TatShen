@@ -18,12 +18,6 @@ const Header_TS: React.FC = () => {
             <Breadcrumb style={{background:'transparent'}}>
                 <Breadcrumb.Item className={styles.breadcrumb}>Главная</Breadcrumb.Item>
             </Breadcrumb>
-            <div className={styles.headerContent}>
-                <Title >Приветствуем тебя в CleverFit — приложении, <br/>которое поможет тебе добиться своей
-                    мечты!
-                </Title>
-                <Button style={{ border:'none'}} icon= { <SettingOutlined className={styles.buttonIcon}/>} className={styles.settings}>{width< 600 ? '': 'Настройки'}</Button>
-            </div>
         </Header>
     );
 };

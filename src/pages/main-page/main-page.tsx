@@ -1,20 +1,26 @@
 import React from 'react';
 
 import styles from './main-page.module.scss';
-import { Typography } from 'antd';
+import { Button, Typography } from 'antd';
 import Card_TS from '@components/Card/Card';
-import {HeartFilled, IdcardOutlined } from '@ant-design/icons';
+import {HeartFilled, IdcardOutlined, SettingOutlined } from '@ant-design/icons';
 import calendar from '../../assets/calendar-light.svg'
 import { useResize } from '@hooks/useResize';
-import { useAppSelector } from '@hooks/typed-react-redux-hooks';
+
+import Title from 'antd/lib/typography/Title';
+import Footer_TS from '@components/Footer/Footer';
+
 
 export const MainPage: React.FC = () => {
     const {width} = useResize()
-    const {isAuth, token} = useAppSelector(state => state.user)
-    console.log(isAuth, token);
-    
     return (
         <main className={styles.main}>
+             <div className={styles.headerContent}>
+                <Title >Приветствуем тебя в CleverFit — приложении, <br/>которое поможет тебе добиться своей
+                    мечты!
+                </Title>
+                <Button style={{ border:'none'}} icon= { <SettingOutlined className={styles.buttonIcon}/>} className={styles.settings}>{width< 600 ? '': 'Настройки'}</Button>
+            </div>
             <div className={styles.mainContent}>
                 <div className={styles.possibilities}>
                     <Typography>
@@ -42,6 +48,7 @@ export const MainPage: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <Footer_TS/>
         </main>
     );
 };
