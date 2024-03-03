@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import * as ROUTERS from './constants/router'
 import App from './App';
 import { MainPage } from './pages';
@@ -19,6 +19,7 @@ import SuccessChangePassword from '@pages/result-page/[success-change-password]/
 import ErrorChangePassword from '@pages/result-page/[error-change-password]/error-change-password';
 import ErrorCheckEmail from '@pages/result-page/[error-check-email]/error-check-email';
 import FeedbackPage from '@pages/feedback-page/feedback-page';
+import { Layout_TS } from '@components/Layout/Layout';
 
 
 
@@ -26,12 +27,12 @@ const Routers = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to={ROUTERS.AUTH} replace={true}/>}/>
-      <Route path={ROUTERS.FEEDBACKS} element={<App />}>
-        <Route index element={<RequireAuth> <FeedbackPage/></RequireAuth>}/> 
-      </Route>
+    <Route path="/" element={<App/>}/>
+    <Route path={ROUTERS.FEEDBACKS} element={<Layout_TS />}>
+      <Route index element={<RequireAuth> <FeedbackPage/></RequireAuth>}/> 
+    </Route>
 
-      <Route path={ROUTERS.HOMEPAGE} element={<App />}>
+      <Route path={ROUTERS.HOMEPAGE} element={<Layout_TS />}>
         <Route index element={<RequireAuth> <MainPage/></RequireAuth>}/> 
       </Route>
 

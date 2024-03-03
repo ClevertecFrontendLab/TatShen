@@ -2,9 +2,9 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { useResize } from '@hooks/useResize';
-import { setLocalStorageItem, validateEmail, validatePassword } from '../../utils/index';
+import { setLocalStorageItem, setSessionStorage, validateEmail, validatePassword } from '../../utils/index';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { setEmail, setPassword, setToken, setAuth } from '@redux/userReducer';
 
 import styles from './SingIn.module.scss';
@@ -20,10 +20,15 @@ import { setIsLoading } from '@redux/loaderReducer';
 
 
 
+
 const SingIn: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation()
+    const [searchParams] = useSearchParams()
+    const googleToken = searchParams.get('accessToken');
+    console.log(googleToken);
+    
     const [formState, setFormState] = useState<IForm>(initialFormState);
     const lastPage = location.state?.from.pathname
     const { email, password } = useAppSelector((state) => state.user); 
@@ -33,7 +38,7 @@ const SingIn: React.FC = () => {
       isSuccess: isSuccessCheckEmail,
       error: checkEmailError}] = useCheckEmailMutation();
 
-    const [rememberMe, setRememberMe] = useState(true);
+    const [rememberMe, setRememberMe] = useState(false);
     const [
         login,
         {
@@ -50,8 +55,9 @@ const SingIn: React.FC = () => {
         if(isFormValid){login({ email, password })}
     };
 
-    const handlerLoginWithGoogle = () => {
-        console.log('сделаю потом');
+    const handlerLoginWithGoogle = async () => {
+        window.location.href = 'https://marathon-api.clevertec.ru/auth/google';
+
     };
 
     const handlerRetrievalPassword = () => {
@@ -105,11 +111,11 @@ const SingIn: React.FC = () => {
         } else (dispatch(setIsLoading(false)))
     }, [dispatch, isLoadingCheckEmail, isLoadingLogin]);
 
-    useEffect(() => {
+    useEffect(() => {            
         if (isSuccessLogin && loginData && 'accessToken' in loginData) {
             dispatch(setToken(loginData.accessToken));
             dispatch(setAuth(true));
-            rememberMe && setLocalStorageItem(LOCAL_STORAGE, loginData.accessToken);
+            rememberMe ? setLocalStorageItem(LOCAL_STORAGE, loginData.accessToken) : setSessionStorage(LOCAL_STORAGE, loginData.accessToken);
             navigate(HOMEPAGE);
         } else if(isErrorLogin){ navigate(`/result/${ERROR_LOGIN}`)}
     }, [dispatch, isErrorLogin, isSuccessLogin, loginData, navigate, rememberMe]);
@@ -149,7 +155,7 @@ const SingIn: React.FC = () => {
                     valuePropName='checked'
                     wrapperCol={{ offset: 0, span: 24 }}
                 >
-                    <Checkbox onChange={() => setRememberMe(!rememberMe)} data-test-id='login-remember'>Запомнить меня</Checkbox>
+                    <Checkbox  onChange={() => setRememberMe(!rememberMe)} data-test-id='login-remember'>Запомнить меня</Checkbox>
                 </Form.Item>
                 <button className={styles.check_button} onClick={handlerRetrievalPassword} data-test-id='login-forgot-button'>Забыли пароль?</button>
             </div>

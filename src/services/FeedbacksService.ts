@@ -11,7 +11,7 @@ export const feedbacksApi = createApi({
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).user.token;
             if (token) {
-                headers.set('Authorization', `Bearer ${token}`);
+                headers.set('Authorization', `Bearer ${JSON.parse(token)}`);
             }
             return headers;
         },
@@ -19,9 +19,8 @@ export const feedbacksApi = createApi({
     tagTypes: ['feedbacks'],
     endpoints: (builder) => ({
         getAllFeedbacks: builder.query({
-            query: (limit = '') => ({
-                url: `/feedback?${limit && `_limit=${limit}`}`
-            }),
+            query: () => ({
+                url: '/feedback'}),
             providesTags: (result) =>
             result
                 ? [
@@ -42,4 +41,4 @@ export const feedbacksApi = createApi({
 })
 
 
-export const { useCreateFeedbackMutation, useLazyGetAllFeedbacksQuery} = feedbacksApi
+export const { useCreateFeedbackMutation, useLazyGetAllFeedbacksQuery, useGetAllFeedbacksQuery} = feedbacksApi

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Avatar, Comment, Rate, Tooltip } from 'antd';
+import { Avatar, Comment, Rate} from 'antd';
 import { IFeedback } from '../../types/feedbackTypes';
 
 import style from './Feedback.module.scss';
@@ -35,7 +35,7 @@ const Feedback: React.FC<IFeedbackProps> = ({ data }) => {
                     )}
                     <div className={style.name}>
                         {data.fullName
-                            ? data.fullName.split(' ').map((item) => <p>{item}</p>)
+                            ? data.fullName.split(' ').map((item,index) => <p key={index}>{item}</p>)
                             : 'Пользователь'}
                     </div>
                 </div>
@@ -46,6 +46,7 @@ const Feedback: React.FC<IFeedbackProps> = ({ data }) => {
                         <Rate
                             value={data.rating}
                             character={({ value, index }) => {
+                                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                 return value && index! < value ? <StarFilled /> : <StarOutlined />;
                             }}
                         />

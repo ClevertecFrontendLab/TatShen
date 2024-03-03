@@ -13,6 +13,7 @@ import Footer_TS from '@components/Footer/Footer';
 
 export const MainPage: React.FC = () => {
     const {width} = useResize()
+  
     return (
         <main className={styles.main}>
              <div className={styles.headerContent}>

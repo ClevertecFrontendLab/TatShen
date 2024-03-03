@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { getLocalStorageItem } from '@utils/index';
+import { getLocalStorageItem, getSessionStorage } from '@utils/index';
 import { LOCAL_STORAGE } from '@constants/localStorage';
 
 interface IUserState {
@@ -12,7 +12,7 @@ interface IUserState {
 
 const userStateInit: IUserState = {
     isAuth: false,
-    token: getLocalStorageItem(LOCAL_STORAGE),
+    token: getLocalStorageItem(LOCAL_STORAGE) || getSessionStorage(LOCAL_STORAGE),
     email: '',
     password: '',
     code: '',

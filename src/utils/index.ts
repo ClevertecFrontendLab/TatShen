@@ -48,6 +48,18 @@ export const removeLocalStorageItem = (key: string) => {
     }
 };
 
+export const setSessionStorage = (key: string, value: unknown) => {
+    const valueToSave = JSON.stringify(value);
+    window.sessionStorage.setItem(key, valueToSave)
+}
+
+export const getSessionStorage = (key: string) => {
+    const token = window.sessionStorage.getItem(key)
+    return token ? token : ''
+}
+
+
+
 
 
 export const getCookie = (key: string) => {
