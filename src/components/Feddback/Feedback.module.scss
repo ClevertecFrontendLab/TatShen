@@ -51,16 +51,24 @@
                     margin: 0 auto;
                 }
             }
-            p {
+            div{
                 width: auto;
                 height: 42px;
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 130%;
-                color: $character-light-title-85;
-                font-family: $font-family;
-                word-break: break-all;
+                gap: 0;
+                text-align: center;
+                p {
+                    width: auto;
+                    height: auto;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 130%;
+                    color: $character-light-title-85;
+                    font-family: $font-family;
+                    word-break: break-all;
+                    margin: 0;
+                }
             }
+            
         }
     }
     .ant-comment-content-detail {
@@ -94,6 +102,8 @@
         color: #FAAD14 !important;
         svg{
         width: 16px;
-        height: 16px;}
+        height: 16px;
+        fill: #FAAD14;
+    }
     }
 }

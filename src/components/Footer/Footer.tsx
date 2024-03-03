@@ -25,9 +25,7 @@ const Footer_TS:React.FC = () => {
         isLoading: isFeedbackLoading,
         isSuccess: isFeedbackSuccess,
         data: feedbacksData, error: feedbacksErrorData}] = useLazyGetAllFeedbacksQuery()
-    const [isModalActive, setIsModalActive] = useState(false)
-    console.log(isModalActive);
-    
+    const [isModalActive, setIsModalActive] = useState(false)   
     const hadleClick = () => {
         getAllFeedbacks('')}
 

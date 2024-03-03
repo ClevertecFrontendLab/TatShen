@@ -1,25 +1,26 @@
 @import '../../styles/variables.scss';
 
-.feedback_container{
+.feedback_container {
     font-family: $font-family;
     padding: 0px 24px;
     width: 100%;
-    height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     gap: 20px;
-    padding-bottom: 42px;
-    .feedbacks{
+    .feedbacks {
         width: 100%;
         height: auto;
-        max-height: calc(100% - 152px);
+        max-height: 730px;
         overflow-y: auto;
     }
-    .buttons{
+    .buttons {
         padding: 112px 0px 0px 0px;
         width: 100%;
         height: 152px;
         display: flex;
         gap: 8px;
-        .newFeedback{
+        .newFeedback {
             border: 1px solid $primary-light-6;
             border-radius: 2px;
             padding: 4px 15px;
@@ -32,8 +33,8 @@
             line-height: 130%;
             text-align: center;
             color: $character-light-primary-inverse;
-                    }
-        .allFeedback{
+        }
+        .allFeedback {
             border-radius: 2px;
             padding: 4px 15px;
             width: 216px;
@@ -44,6 +45,149 @@
             line-height: 130%;
             text-align: center;
             color: $primary-light-6;
+        }
+    }
+}
+
+.addNewFeedback {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    z-index: 5;
+
+    .modal {
+        border-radius: 2px;
+        width: 539px;
+        min-height: 247px;
+        height: auto;
+        box-shadow: 0 9px 28px 8px rgba(0, 0, 0, 0.05), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+            0 3px 6px -4px rgba(0, 0, 0, 0.12);
+        background: $character-light-primary-inverse;
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+
+        .modal_header {
+            padding: 16px 24px;
+            width: 539px;
+            height: 53px;
+            display: flex;
+            justify-content: space-between;
+            box-shadow: inset 0 -1px 0 0 $character-light-dividers;
+            P {
+                width: 302px;
+                height: 21px;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 130%;
+                color: $character-light-title-85;
+            }
+        }
+
+        .modal_body {
+            padding: 24px;
+            width: 539px;
+            min-height: 134px;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .modal_footer {
+            padding: 10px 24px;
+            width: 539px;
+            height: 60px;
+            box-shadow: inset 0 1px 0 0 $character-light-dividers;
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+                border: 1px solid $primary-light-6;
+                border-radius: 2px;
+                padding: 4px 15px;
+                width: 130px;
+                height: 40px;
+                box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+                background: $primary-light-6;
+
+                span {
+                    font-family: $font-family;
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 130%;
+                    text-align: center;
+                    color: $character-light-primary-inverse;
+                }
+            }
+        }
+    }
+}
+
+.none {
+    display: none;
+}
+
+:global {
+    .ant-result {
+        font-family: $font-family;
+        border-radius: 2px;
+        padding: 64px 32px;
+        width: 539px;
+        height: 327px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        background: $character-light-primary-inverse;
+
+        .ant-result-title {
+            font-weight: 500;
+            font-size: 24px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-title-85;
+        }
+
+        .ant-result-subtitle {
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-secondary-45;
+        }
+
+        .ant-btn-primary {
+            border: 1px solid $primary-light-6;
+            border-radius: 2px;
+            padding: 4px 15px;
+            width: 180px;
+            height: 40px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+            background: $primary-light-6;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-primary-inverse;
+        }
+
+        .ant-btn-default {
+            border: 1px solid $character-light-border;
+            border-radius: 2px;
+            padding: 4px 15px;
+            width: 180px;
+            height: 40px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.02);
+            background: $character-light-primary-inverse;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            text-align: center;
+            color: $character-light-title-85;
         }
     }
 }

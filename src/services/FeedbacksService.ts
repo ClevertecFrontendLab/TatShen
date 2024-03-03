@@ -11,7 +11,7 @@ export const feedbacksApi = createApi({
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).user.token;
             if (token) {
-                headers.set('authorization', `Bearer ${token}`);
+                headers.set('Authorization', `Bearer ${token}`);
             }
             return headers;
         },
@@ -30,9 +30,9 @@ export const feedbacksApi = createApi({
                   ]
                 : [{ type: 'feedbacks', id: 'LIST' }],
         }),
-        craeteFeedback: builder.mutation<Array<IFeedback>, IFeedbackRequest>({
+        createFeedback: builder.mutation<Array<IFeedback>, IFeedbackRequest>({
             query: (body: IFeedback) => ({
-                url: '/feedbacks',
+                url: '/feedback',
                 method: 'POST',
                 body,
             }),
@@ -42,4 +42,4 @@ export const feedbacksApi = createApi({
 })
 
 
-export const { useCraeteFeedbackMutation, useLazyGetAllFeedbacksQuery} = feedbacksApi
+export const { useCreateFeedbackMutation, useLazyGetAllFeedbacksQuery} = feedbacksApi

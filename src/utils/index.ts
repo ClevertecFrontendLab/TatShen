@@ -48,14 +48,7 @@ export const removeLocalStorageItem = (key: string) => {
     }
 };
 
-export interface IPreviousLocations {
-    location: { pathname: string };
-}
-export const getClearLastRoutePath = (previousLocations: Array<IPreviousLocations>) => {
-    if (!previousLocations.length) return '';
 
-    return previousLocations[previousLocations.length - 1].location?.pathname.split('/').join('/');
-};
 
 export const getCookie = (key: string) => {
     const nameCookie = key + '=';
