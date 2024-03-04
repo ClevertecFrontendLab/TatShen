@@ -16,16 +16,15 @@
 
         &::-webkit-scrollbar {
             width: 10px;
-            background-color:transparent;
-          }
-      
-          &::-webkit-scrollbar-thumb {
+            background-color: transparent;
+        }
+
+        &::-webkit-scrollbar-thumb {
             height: 40px;
             border: 2px solid transparent;
             border-radius: 5px;
             background-color: transparent;
-          }
-
+        }
     }
     .buttons {
         padding: 112px 0px 0px 0px;
@@ -134,6 +133,20 @@
             text-align: center;
             color: $character-light-title-85;
         }
+
+        .ant-modal-footer{
+            .ant-btn[disabled] {
+                background: $character-light-background;
+                font-weight: 400;
+                font-size: 14px;
+                line-height: 130%;
+                text-align: center;
+                span{
+                    color:  $character-light-disable-25 !important;
+                }
+            }
+        }
+      
     }
 
     .ant-result-500 {
@@ -205,6 +218,7 @@
             height: 40px;
             box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
             background: $primary-light-6;
+            color: $character-light-primary-inverse;
 
             span {
                 font-family: $font-family;
@@ -212,7 +226,7 @@
                 font-size: 14px;
                 line-height: 130%;
                 text-align: center;
-                color: $character-light-primary-inverse;
+                
             }
         }
     }
@@ -293,28 +307,31 @@
             width: 328px;
             height: 568px;
             justify-content: center;
-            .ant-result-extra{
+
+            .ant-result-subtitle {
+                padding: 0 50px;
+            }
+
+            .ant-result-extra {
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
             }
         }
 
-      
-
         .ant-result {
             padding: 32px 16px !important;
             width: 328px;
             height: auto;
 
-            .ant-btn-primary{
+            .ant-btn-primary {
                 border-radius: 2px;
                 padding: 0px 7px;
                 width: 144px;
                 height: 40px;
             }
 
-            .ant-btn-default{
+            .ant-btn-default {
                 border-radius: 2px;
                 padding: 4px 15px;
                 width: 144px;
@@ -322,7 +339,7 @@
             }
         }
 
-        .ant-result-extra{
+        .ant-result-extra {
             display: flex;
             flex-direction: row;
         }
@@ -345,11 +362,11 @@
             height: 314px;
             padding: 48px 32px;
 
-           .content{
-            padding: 0;
-            width: 264px;
-            height: 108px;
-           }
+            .content {
+                padding: 0;
+                width: 264px;
+                height: 108px;
+            }
         }
     }
 
@@ -362,5 +379,4 @@
             width: 100%;
         }
     }
-
 }

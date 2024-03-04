@@ -163,7 +163,7 @@ const FeedbackPage: React.FC = () => {
             </div>
             <div className={isModalActive ? style.addNewFeedback : style.none}>
                 {isModalActive === 'newFeedback' ? (
-                    <Modal title="Ваш отзыв" open={isModalActive === 'newFeedback' }  onCancel={() => setIsModalActive('')} footer={<Button  onClick={addNewFeedback} data-test-id='new-review-submit-button'>Опубликовать</Button>}>
+                    <Modal title="Ваш отзыв" open={isModalActive === 'newFeedback' }  onCancel={() => setIsModalActive('')} footer={<Button disabled = {!formState.rating} onClick={addNewFeedback} data-test-id='new-review-submit-button'>Опубликовать</Button>}>
                          <Rate
                                 onChange={handleRate}
                                 defaultValue={formState.rating}
