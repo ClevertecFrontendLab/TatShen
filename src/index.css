@@ -72,7 +72,6 @@ input {
 
 .ant-layout-has-sider{
   .ant-layout{
-    gap: 24px;
     padding-bottom: 42px;
   }
 }

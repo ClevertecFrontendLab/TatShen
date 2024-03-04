@@ -232,7 +232,7 @@
         font-family: $font-family;
         border-radius: 2px;
         padding: 56px 130px;
-        width: 1184px;
+        width: 100%;
         height: 245px;
         box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
         background: $character-light-primary-inverse;
@@ -292,6 +292,12 @@
             padding: 64px 32px 56px 32px;
             width: 328px;
             height: 568px;
+            justify-content: center;
+            .ant-result-extra{
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
         }
 
       
