@@ -12,7 +12,7 @@ interface IUserState {
 
 const userStateInit: IUserState = {
     isAuth: false,
-    token: getLocalStorageItem(LOCAL_STORAGE) || getSessionStorage(LOCAL_STORAGE),
+    token: getLocalStorageItem(LOCAL_STORAGE),
     email: '',
     password: '',
     code: '',

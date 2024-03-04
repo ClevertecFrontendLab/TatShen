@@ -82,8 +82,8 @@ const FeedbackPage: React.FC = () => {
     };
 
     const handleError = () => {
-        setIsModalActive('')
         navigate(HOMEPAGE)
+        setIsModalActive('')
     }
 
     const handleRate = (stars: number) => {
@@ -206,7 +206,7 @@ const FeedbackPage: React.FC = () => {
                             <Button
                                 type='primary'
                                 key='console'
-                                onClick={handleError}
+                                onClick={()=> setIsModalActive('')}
                                 data-test-id='write-review-not-saved-modal'
                             >
                                 Написать отзыв
@@ -222,7 +222,7 @@ const FeedbackPage: React.FC = () => {
                         title='Что-то пошло не так'
                         subTitle='Произошла ошибка, попробуйте еще раз.'
                         extra={
-                            <Button type='primary' onClick={() => setIsModalActive('')}>
+                            <Button type='primary' onClick={handleError}>
                                 Назад
                             </Button>
                         }

@@ -11,7 +11,7 @@ export const feedbacksApi = createApi({
         baseUrl: `https://marathon-api.clevertec.ru`,
         credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
-            const token = (getState() as RootState).user.token;
+            const token = (getState() as RootState).user.token || getSessionStorage(LOCAL_STORAGE);
             if (token) {
                 headers.set('Authorization', `Bearer ${token}`);
             } 

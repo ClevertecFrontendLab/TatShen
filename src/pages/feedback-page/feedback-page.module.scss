@@ -273,6 +273,40 @@
                 width: 100%;
             }
         }
+
+        .ant-result-500 {
+            border-radius: 2px;
+            padding: 64px 32px 56px 32px;
+            width: 328px;
+            height: 568px;
+        }
+
+      
+
+        .ant-result {
+            padding: 32px 16px !important;
+            width: 328px;
+            height: auto;
+
+            .ant-btn-primary{
+                border-radius: 2px;
+                padding: 0px 7px;
+                width: 144px;
+                height: 40px;
+            }
+
+            .ant-btn-default{
+                border-radius: 2px;
+                padding: 4px 15px;
+                width: 144px;
+                height: 40px;
+            }
+        }
+
+        .ant-result-extra{
+            display: flex;
+            flex-direction: row;
+        }
     }
     .feedback_container {
         .buttons {
