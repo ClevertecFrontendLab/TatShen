@@ -2,8 +2,7 @@ import { Breadcrumb } from "antd";
 import React from "react";
 
 import styles from './Bredcrumb.module.scss'
-import { Link, useLocation } from "react-router-dom";
-import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
+import { useLocation } from "react-router-dom";
 
 type Vocabulary = {
       [key: string]: string

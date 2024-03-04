@@ -4,7 +4,7 @@ import { GooglePlusOutlined } from '@ant-design/icons';
 import { useResize } from '@hooks/useResize';
 import { setLocalStorageItem, setSessionStorage, validateEmail, validatePassword } from '../../utils/index';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { setEmail, setPassword, setToken, setAuth } from '@redux/userReducer';
 
 import styles from './SingIn.module.scss';

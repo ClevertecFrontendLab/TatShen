@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IFeedback, IFeedbackRequest } from '../types/feedbackTypes';
 
 import { RootState } from 'src/store/configure-store';
-import { getLocalStorageItem, getSessionStorage } from '@utils/index';
+import { getSessionStorage } from '@utils/index';
 import { LOCAL_STORAGE } from '@constants/localStorage';
 
 export const feedbacksApi = createApi({

@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { getLocalStorageItem, getSessionStorage } from '@utils/index';
+import { getLocalStorageItem } from '@utils/index';
 import { LOCAL_STORAGE } from '@constants/localStorage';
 
 interface IUserState {
