@@ -3,6 +3,7 @@ import React from "react";
 
 import styles from './Bredcrumb.module.scss'
 import { Link, useLocation } from "react-router-dom";
+import BreadcrumbItem from "antd/lib/breadcrumb/BreadcrumbItem";
 
 type Vocabulary = {
       [key: string]: string
@@ -17,7 +18,7 @@ const Breadcrumbs:React.FC = () => {
     const pathname = useLocation().pathname
     
 return <Breadcrumb style={{background:'transparent'}}>
-    {pathname === '/main' ? <Link to ={pathname}className ={styles.breadcrumb}> Главная</Link> : <span><Link to ='/main'className ={styles.breadcrumb}> Главная</Link> / <Link  to={pathname} className={styles.breadcrumb}>{vocabulary[pathname]}</Link></span>}
+    {pathname === '/main' ? <Breadcrumb.Item  href ={pathname}className ={styles.breadcrumb}> Главная</Breadcrumb.Item> : <><Breadcrumb.Item href='/main' className={styles.breadcrumb}> Главная</Breadcrumb.Item><Breadcrumb.Item href={pathname} className={styles.breadcrumb}>{vocabulary[pathname]}</Breadcrumb.Item></>}
 
 </Breadcrumb>
 }

@@ -2,6 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { IFeedback, IFeedbackRequest } from '../types/feedbackTypes';
 
 import { RootState } from 'src/store/configure-store';
+import { getLocalStorageItem, getSessionStorage } from '@utils/index';
+import { LOCAL_STORAGE } from '@constants/localStorage';
 
 export const feedbacksApi = createApi({
     reducerPath: 'feedbacksApi',
@@ -11,8 +13,8 @@ export const feedbacksApi = createApi({
         prepareHeaders: (headers, { getState }) => {
             const token = (getState() as RootState).user.token;
             if (token) {
-                headers.set('Authorization', `Bearer ${JSON.parse(token)}`);
-            }
+                headers.set('Authorization', `Bearer ${token}`);
+            } 
             return headers;
         },
     }),
@@ -21,13 +23,7 @@ export const feedbacksApi = createApi({
         getAllFeedbacks: builder.query({
             query: () => ({
                 url: '/feedback'}),
-            providesTags: (result) =>
-            result
-                ? [
-                      ...result.map(({ id }) => ({ type: 'feedback' as const, id })),
-                      { type: 'feedbacks', id: 'LIST' },
-                  ]
-                : [{ type: 'feedbacks', id: 'LIST' }],
+            providesTags:['feedbacks'],
         }),
         createFeedback: builder.mutation<Array<IFeedback>, IFeedbackRequest>({
             query: (body: IFeedback) => ({
@@ -35,7 +31,7 @@ export const feedbacksApi = createApi({
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: [{ type: 'feedbacks', id: 'LIST' }],
+            invalidatesTags:['feedbacks'],
         }),   
 })
 })

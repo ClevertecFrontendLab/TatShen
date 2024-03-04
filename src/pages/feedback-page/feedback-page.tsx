@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from 'react';
 
 import style from './feedback-page.module.scss';
-import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
+import { useAppDispatch, useAppSelector} from '@hooks/typed-react-redux-hooks';
 import Feedback from '@components/Feddback/Fedback';
 import { IFeedback } from '../../types/feedbackTypes';
-import { removeLocalStorageItem, sortArrayByDate } from '@utils/index';
-import { Button, Rate, Result } from 'antd';
-import { CloseOutlined, StarFilled, StarOutlined } from '@ant-design/icons';
+import { removeLocalStorageItem, sortArrayByDate} from '@utils/index';
+import { Button, Modal, Rate, Result } from 'antd';
+import { StarFilled, StarOutlined } from '@ant-design/icons';
 import { IFeedbackForm, initialFeedbackForm } from './types';
 import {
     useCreateFeedbackMutation,
     useGetAllFeedbacksQuery,
 } from '../../services/FeedbacksService';
 import TextArea from 'antd/lib/input/TextArea';
-import Modal from '@components/Modal/Modal';
 import { setIsLoading } from '@redux/loaderReducer';
 import { setFeedbacks } from '@redux/feedbacksReducer';
 import { useNavigate } from 'react-router-dom';
-import { AUTH } from '@constants/router';
 import { IServerErrorResponse } from '../../types/enterTypes';
 import { LOCAL_STORAGE } from '@constants/localStorage';
 import { setToken } from '@redux/userReducer';
+import { HOMEPAGE } from '@constants/router';
 
 const FeedbackPage: React.FC = () => {
     const navigate = useNavigate();
-    const dispath = useAppDispatch();
+    const dispatch = useAppDispatch();
     const allFeedbacksData = useAppSelector((state) => state.feedbacks.feedbacks);
-    console.log(allFeedbacksData);
-    
+    const feedbacks = sortArrayByDate<IFeedback, 'createdAt'>(allFeedbacksData, 'createdAt');
     const [allFeedbacks, setAllFeedbacks] = useState(true);
     const [isModalActive, setIsModalActive] = useState<string>('');
     const [formState, setFormState] = useState<IFeedbackForm>(initialFeedbackForm);
@@ -35,9 +33,9 @@ const FeedbackPage: React.FC = () => {
         isError: isFeedbackError,
         isLoading: isFeedbackLoading,
         isSuccess: isFeedbackSuccess,
-        data: feedbacksData,
+        data: feedbacksData = [],
         error: feedbacksErrorData,
-    } = useGetAllFeedbacksQuery(null, {
+    } = useGetAllFeedbacksQuery('', {
         pollingInterval: 10000,
     });
 
@@ -52,32 +50,29 @@ const FeedbackPage: React.FC = () => {
 
     useEffect(() => {
         if (isFeedbackLoading) {
-            dispath(setIsLoading(true));
+            dispatch(setIsLoading(true));
         }
-    }, [dispath, isFeedbackLoading]);
+    }, [dispatch, isFeedbackLoading]);
 
     useEffect(()=> {if (isFeedbackSuccess) {
-        dispath(setIsLoading(false));
-        const feedbacks = sortArrayByDate<IFeedback, 'createdAt'>(feedbacksData, 'createdAt');
-        dispath(setFeedbacks(feedbacks));
-    }}, [dispath, feedbacksData, isFeedbackSuccess])
+        dispatch(setIsLoading(false));
+        dispatch(setFeedbacks(feedbacksData))
+
+    }}, [dispatch, feedbacksData, isFeedbackSuccess])
     
     useEffect(()=> {if (
         isFeedbackError &&
-        (feedbacksErrorData as IServerErrorResponse).status.toString() === '403'
-    ) {
-        dispath(setIsLoading(false));
-        dispath(setToken(''));
+        (feedbacksErrorData as IServerErrorResponse)?.status.toString() === '403'
+    ) { 
+        dispatch(setIsLoading(false));
+        dispatch(setToken(''))
         removeLocalStorageItem(LOCAL_STORAGE);
-        navigate(AUTH);
-    }}, [dispath, feedbacksErrorData, isFeedbackError, navigate])
+    }{ if (isFeedbackError){
+        dispatch(setIsLoading(false));
+        setIsModalActive('500')}}}, 
+        [dispatch, feedbacksErrorData, isFeedbackError, navigate])
 
-    useEffect(() => {
-        if (isFeedbackError) {
-            dispath(setIsLoading(false));
-            setIsModalActive('500');
-        }
-    }, [dispath, isFeedbackError]);
+
 
     const handleChangeMessage = (e: { target: { value: string } }) => {
         setFormState((formState) => ({
@@ -85,6 +80,11 @@ const FeedbackPage: React.FC = () => {
             message: e.target.value,
         }));
     };
+
+    const handleError = () => {
+        setIsModalActive('')
+        navigate(HOMEPAGE)
+    }
 
     const handleRate = (stars: number) => {
         setFormState((formState) => ({
@@ -125,14 +125,14 @@ const FeedbackPage: React.FC = () => {
     }, [isCreateFeedbackError])
 
     return (
-        <div className={ allFeedbacksData.length > 0 ? style.feedback_container : style.feedback_container_empty}>
-            {allFeedbacksData.length > 0 ? (
+        <div className={ feedbacks && feedbacks?.length > 0 ? style.feedback_container : style.feedback_container_empty}>
+            {feedbacks && feedbacks?.length > 0 ? (
                     <div className={style.feedbacks}>
-                        {allFeedbacksData && allFeedbacks
-                            ? allFeedbacksData
+                        {feedbacks && allFeedbacks
+                            ? feedbacks
                                   .slice(0, 4)
-                                  .map((item) => <Feedback data={item}></Feedback>)
-                            : allFeedbacksData.map((item) => <Feedback data={item}></Feedback>)}
+                                  .map((item: IFeedback, index: React.Key | null | undefined) => <Feedback data={item} key={index}></Feedback>)
+                            : feedbacks.map((item: IFeedback, index: React.Key | null | undefined) => <Feedback data={item} key={index}></Feedback>)}
                     </div>
                 ) : (
                     <div className={style.feedbackNone}>
@@ -152,7 +152,7 @@ const FeedbackPage: React.FC = () => {
                 >
                     Написать отзыв
                 </Button>
-                {allFeedbacksData.length > 0 ?   <Button
+                {feedbacks?.length > 0 ?   <Button
                     onClick={() => setAllFeedbacks(!allFeedbacks)}
                     className={style.allFeedback}
                     data-test-id='all-reviews-button'
@@ -163,17 +163,8 @@ const FeedbackPage: React.FC = () => {
             </div>
             <div className={isModalActive ? style.addNewFeedback : style.none}>
                 {isModalActive === 'newFeedback' ? (
-                    <Modal className={style.modal}>
-                        <div className={style.modal_header}>
-                            <p>Ваш отзыв</p>
-                            <CloseOutlined
-                                onClick={() => setIsModalActive('')}
-                                width={14}
-                                height={15}
-                            />
-                        </div>
-                        <div className={style.modal_body}>
-                            <Rate
+                    <Modal title="Ваш отзыв" open={isModalActive === 'newFeedback' }  onCancel={() => setIsModalActive('')} footer={<Button  onClick={addNewFeedback} data-test-id='new-review-submit-button'>Опубликовать</Button>}>
+                         <Rate
                                 onChange={handleRate}
                                 defaultValue={formState.rating}
                                 character={({ value, index }) => {
@@ -186,17 +177,12 @@ const FeedbackPage: React.FC = () => {
                                 }}
                             ></Rate>
                             <TextArea
+                                autoSize={{ minRows: 2}}
                                 value={formState.message}
                                 onChange={(e) => handleChangeMessage(e)}
-                                autoSize={{ minRows: 2, maxRows: 8 }}
-                                style={{ height: 120 }}
                                 placeholder='Расскажите, почему Вам понравилось наше приложение'
                             />
-                        </div>
-                        <div className={style.modal_footer}>
-                            <Button onClick={addNewFeedback} data-test-id='new-review-submit-button'>Опубликовать</Button>
-                        </div>
-                    </Modal>
+                  </Modal>
                 ) : isModalActive === 'success' ? (
                     <Result
                         status='success'
@@ -220,7 +206,7 @@ const FeedbackPage: React.FC = () => {
                             <Button
                                 type='primary'
                                 key='console'
-                                onClick={() => setIsModalActive('newFeedback')}
+                                onClick={handleError}
                                 data-test-id='write-review-not-saved-modal'
                             >
                                 Написать отзыв
@@ -232,6 +218,7 @@ const FeedbackPage: React.FC = () => {
                     />
                 ) : (
                     <Result
+                        status={500}
                         title='Что-то пошло не так'
                         subTitle='Произошла ошибка, попробуйте еще раз.'
                         extra={
@@ -247,3 +234,5 @@ const FeedbackPage: React.FC = () => {
 };
 
 export default FeedbackPage;
+
+

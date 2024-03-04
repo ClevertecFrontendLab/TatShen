@@ -9,11 +9,14 @@ import { useResize } from '@hooks/useResize';
 
 import Title from 'antd/lib/typography/Title';
 import Footer_TS from '@components/Footer/Footer';
+import { useAppSelector } from '@hooks/typed-react-redux-hooks';
 
 
 export const MainPage: React.FC = () => {
     const {width} = useResize()
-  
+    const {token} = useAppSelector((state) => state.user)
+    console.log(token);
+    
     return (
         <main className={styles.main}>
              <div className={styles.headerContent}>

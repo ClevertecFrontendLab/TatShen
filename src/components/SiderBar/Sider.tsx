@@ -9,26 +9,22 @@ import calendar from '../../assets/calendar.svg'
 const { Sider } = Layout;
 import { useResize } from '@hooks/useResize';
 import { useAppDispatch} from '@hooks/typed-react-redux-hooks';
-import {  useNavigate } from 'react-router-dom';
-import { removeLocalStorageItem } from '@utils/index';
 import { setAuth, setCode, setEmail, setPassword, setToken } from '@redux/userReducer';
-import { LOCAL_STORAGE } from '@constants/localStorage';
-import { AUTH } from '@constants/router';
 
 const SiderBar: React.FC = () => {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     const {width} = useResize()
     const dispatch = useAppDispatch()
-    const navigate = useNavigate()
+
 
     const handlerExist = () => {
-        removeLocalStorageItem(LOCAL_STORAGE)
+        localStorage.clear()
+        window.sessionStorage.clear()
         dispatch(setEmail(''))
         dispatch(setPassword(''))
         dispatch(setAuth(false))
         dispatch(setCode(''))
         dispatch(setToken(''))
-        navigate(AUTH)
     }
     
     const handlerCollapsed = () => {

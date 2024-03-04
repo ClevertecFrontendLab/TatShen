@@ -6,7 +6,8 @@
         width: 100%;
         border-radius: 2px;
         padding: 16px !important;
-        height: 128px;
+        height: auto;
+        min-height: 128px;
         box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
         background: $character-light-primary-inverse !important;
         margin-bottom: 20px;
@@ -106,5 +107,42 @@
         height: 16px;
         fill: #FAAD14;
     }
+    }
+}
+
+
+@media (width < 600px ){
+    :global{
+        .ant-comment-inner {
+            flex-direction: column;
+        }
+        .ant-comment-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+    
+            > div {
+                display: flex;
+                flex-direction: column;
+
+            }
+        }
+        .ant-comment-content-author{
+            height: 42px;
+            width: 100%;
+            align-items: flex-start;
+        }
+        .ant-comment-content-author-name{
+            div{
+                flex-direction: row;
+                div{
+                    flex-direction: column;
+                }
+            }
+        }
+        .ant-comment-content-detail{
+            width: 100%;
+            height: auto;
+        }
     }
 }

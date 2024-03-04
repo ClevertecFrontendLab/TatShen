@@ -25,10 +25,6 @@ const SingIn: React.FC = () => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation()
-    const [searchParams] = useSearchParams()
-    const googleToken = searchParams.get('accessToken');
-    console.log(googleToken);
-    
     const [formState, setFormState] = useState<IForm>(initialFormState);
     const lastPage = location.state?.from.pathname
     const { email, password } = useAppSelector((state) => state.user); 
