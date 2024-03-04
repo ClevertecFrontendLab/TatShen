@@ -35,7 +35,7 @@ const Feedback: React.FC<IFeedbackProps> = ({ data }) => {
                     )}
                     <div className={style.name}>
                         {data.fullName
-                            ? data.fullName.split(' ').map((item,index) => <p key={index}>{item}</p>)
+                            ? data.fullName.split(' ').map((item) => <p key={data.id}>{item}</p>)
                             : <p>Пользователь</p>}
                     </div>
                 </div>

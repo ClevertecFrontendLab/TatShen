@@ -131,7 +131,7 @@ const FeedbackPage: React.FC = () => {
                         {feedbacks && allFeedbacks
                             ? feedbacks
                                   .slice(0, 4)
-                                  .map((item: IFeedback, index: React.Key | null | undefined) => <Feedback data={item} key={index}></Feedback>)
+                                  .map((item: IFeedback) => <Feedback data={item} key={item.id}></Feedback>)
                             : feedbacks.map((item: IFeedback, index: React.Key | null | undefined) => <Feedback data={item} key={index}></Feedback>)}
                     </div>
                 ) : (
