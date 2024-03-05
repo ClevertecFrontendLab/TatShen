@@ -93,3 +93,14 @@ export const sortArrayByDate = <T, K extends keyof T>(items: T[], key: K): T[] =
 
     return sortedItems;
 };
+
+
+export const getDate = (dateStr: string) => {
+    const dateFS = new Date(dateStr);
+
+    return dateFS.toLocaleDateString('ru-RU', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+    });
+};

@@ -1,19 +1,10 @@
 import React from 'react';
-import { Avatar, Comment, Rate} from 'antd';
-import { IFeedback } from '../../types/feedbackTypes';
+import { Avatar, Comment, Rate } from 'antd';
+import { IFeedback } from '../../../types/feedbackTypes';
 
 import style from './Feedback.module.scss';
 import { StarFilled, StarOutlined, UserOutlined } from '@ant-design/icons';
-
-const getDate = (dateStr: string) => {
-    const dateFS = new Date(dateStr);
-
-    return dateFS.toLocaleDateString('ru-RU', {
-        month: 'numeric',
-        day: 'numeric',
-        year: 'numeric',
-    });
-};
+import { getDate } from '@utils/index';
 
 interface IFeedbackProps {
     data: IFeedback;
@@ -34,9 +25,13 @@ const Feedback: React.FC<IFeedbackProps> = ({ data }) => {
                         <UserOutlined className={style.icon} />
                     )}
                     <div className={style.name}>
-                        {data.fullName
-                            ? data.fullName.split(' ').map((item) => <p key={data.id}>{item}</p>)
-                            : <p>Пользователь</p>}
+                        {data.fullName ? (
+                            data.fullName
+                                .split(' ')
+                                .map((item) => <p key={data.id + item}>{item}</p>)
+                        ) : (
+                            <p>Пользователь</p>
+                        )}
                     </div>
                 </div>
             }

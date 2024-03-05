@@ -2,7 +2,7 @@
 
 .footer{
     display: flex;
-    padding: 0rem 1.5rem;
+    padding: 0 24px;
     width: 100%;
     height: 283px;
     justify-content: space-between;
@@ -47,7 +47,7 @@
 
 .error_container{
     border-radius: 2px;
-    padding: 64px 32px 56px 32px;
+    padding: 64px 32px 56px;
     width: 539px;
     height: 550px;
     .content{

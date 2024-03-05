@@ -24,6 +24,11 @@
     }
 }
 
+.logo{
+    width: 309px;
+    height: 76px;
+}
+
 .button_container {
     width: 100%;
     display: flex;
@@ -34,7 +39,7 @@
     width: 184px;
     height: 46px;
     span {
-        padding: 16px 0px;
+        padding: 16px 0;
         width: 39px;
         height: 46px;
         font-family: $font-family;
@@ -52,7 +57,7 @@
     }
 }
 
-@media (width<600px) {
+@media (width < 600px) {
     .enter_modal {
         border-radius: 2px;
         padding: 32px 16px;
@@ -71,5 +76,9 @@
     .button {
         width: 148px;
         height: 46px;
+    }
+    .logo{
+        width: 203px;
+        height: 50px;
     }
 }

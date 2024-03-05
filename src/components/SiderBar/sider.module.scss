@@ -1,5 +1,20 @@
 @import '../../styles/variables.scss';
 
+:global{
+    .ant-menu-vertical .ant-menu-item{
+        margin-top: 0 !important;
+        margin-bottom: 0;
+    }
+
+    .ant-menu-vertical > .ant-menu-item{
+        height: 42px !important;
+    }
+
+    .ant-menu-vertical .ant-menu-item:not(:last-child){
+        margin-bottom: 0 !important;
+    }
+}
+
 .sider {
     display: flex;
         >div{
@@ -117,7 +132,7 @@
     height: 40px;
     display: flex;
     align-items: center;
-    padding: 0rem 1rem;
+    padding: 0 16px;
     border-radius: 0;
     box-shadow: inset 0 1px 0 0 $character-light-dividers;
     align-self: flex-end;
@@ -174,7 +189,7 @@
         align-items: flex-start;
         padding-top: 2px;
         width: 32px;
-        padding-left: 0px;
+        padding-left: 0;
         background: #fff;
         position: absolute;
         top: 29px;
@@ -186,7 +201,7 @@
         align-items: center;
         justify-content: center;
         color: #8c8c8c;
-        z-index: 999;
+        z-index: 9;
 
    
     }

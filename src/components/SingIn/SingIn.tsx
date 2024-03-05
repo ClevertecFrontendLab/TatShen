@@ -17,6 +17,7 @@ import { CONFIRM_EMAIL, ERROR_CHECK_EMAIL, ERROR_EMAIL_NO_EXIST, ERROR_LOGIN,  H
 import { IServerErrorResponse } from '../../types/enterTypes';
 import { IForm, initialFormState } from '@pages/auth-page/types';
 import { setIsLoading } from '@redux/loaderReducer';
+import { GOOGLE_AUTH } from '@constants/api';
 
 
 
@@ -52,7 +53,7 @@ const SingIn: React.FC = () => {
     };
 
     const handlerLoginWithGoogle = async () => {
-        window.location.href = 'https://marathon-api.clevertec.ru/auth/google';
+        window.location.href = GOOGLE_AUTH;
 
     };
 

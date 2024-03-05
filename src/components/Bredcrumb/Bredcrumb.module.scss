@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 
-.breadcrumb {
+.breadcrumb, .breadcrumb_main {
     font-family: $font-family;
     font-weight: 400;
     font-size: 0.88rem;
@@ -8,3 +8,7 @@
     color: $character-light-title-85 !important;
 }
 
+.breadcrumb_main{
+    color: $character-light-secondary-45 !important;
+    
+}

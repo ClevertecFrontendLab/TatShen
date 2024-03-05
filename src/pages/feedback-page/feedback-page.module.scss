@@ -2,7 +2,7 @@
 
 .feedback_container {
     font-family: $font-family;
-    padding: 0px 24px;
+    padding: 0 24px;
     width: 100%;
     height: 100%;
     display: flex;
@@ -27,7 +27,7 @@
         }
     }
     .buttons {
-        padding: 112px 0px 0px 0px;
+        padding: 112px 0 0 ;
         width: 100%;
         height: 152px;
         display: flex;
@@ -71,7 +71,7 @@
     width: 100%;
     height: 100%;
     backdrop-filter: blur(12px);
-    z-index: 5;
+    z-index: 10;
 }
 
 .none {
@@ -151,7 +151,7 @@
 
     .ant-result-500 {
         border-radius: 2px;
-        padding: 64px 32px 56px 32px;
+        padding: 64px 32px 56px;
         width: 539px;
         height: 550px;
     }
@@ -232,61 +232,6 @@
     }
 }
 
-.feedback_container_empty {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    font-family: $font-family;
-    padding: 0px 24px;
-    width: 100%;
-    height: 100%;
-    gap: 20px;
-    .feedbackNone {
-        font-family: $font-family;
-        border-radius: 2px;
-        padding: 56px 130px;
-        width: 100%;
-        height: 245px;
-        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
-        background: $character-light-primary-inverse;
-        display: flex;
-        flex-direction: column;
-        gap: 48px;
-
-        .title {
-            font-weight: 500;
-            font-size: 24px;
-            line-height: 130%;
-            text-align: center;
-            color: $primary-light-9;
-            margin: 0;
-        }
-
-        .content {
-            padding: 0 200px;
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 130%;
-            text-align: center;
-            color: $character-light-secondary-45;
-        }
-    }
-    .newFeedback {
-        border: 1px solid $primary-light-6;
-        border-radius: 2px;
-        padding: 4px 15px;
-        width: 142px;
-        height: 40px;
-        box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
-        background: $primary-light-6;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 130%;
-        text-align: center;
-        color: $character-light-primary-inverse;
-    }
-}
 
 @media (width < 600px) {
     :global {
@@ -303,7 +248,7 @@
 
         .ant-result-500 {
             border-radius: 2px;
-            padding: 64px 32px 56px 32px;
+            padding: 64px 32px 56px;
             width: 328px;
             height: 568px;
             justify-content: center;
@@ -326,7 +271,7 @@
 
             .ant-btn-primary {
                 border-radius: 2px;
-                padding: 0px 7px;
+                padding: 0 7px;
                 width: 144px;
                 height: 40px;
             }

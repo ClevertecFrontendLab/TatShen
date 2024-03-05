@@ -8,15 +8,17 @@
     font-family: $font-family;
     
 }
-.code_container{
+.code_container, .error_container{
     border-radius: 2px;
-    padding: 64px 32px 56px 32px;
+    padding: 64px 32px 56px;
     width: 539px;
     height: 428px;
 }
+
+
 .error_container{
     border-radius: 2px;
-    padding: 64px 32px 56px 32px;
+    padding: 64px 32px 56px;
     width: 539px;
     height: 550px;
     .content{
@@ -130,8 +132,6 @@
     }
 
     .error_container{
-        border-radius: 2px;
-        padding: 64px 32px 56px 32px;
         width: 328px;
         height: 568px;
         .content{

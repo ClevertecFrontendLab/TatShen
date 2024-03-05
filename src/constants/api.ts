@@ -1,0 +1,1 @@
+export const GOOGLE_AUTH = 'https://marathon-api.clevertec.ru/auth/google'
