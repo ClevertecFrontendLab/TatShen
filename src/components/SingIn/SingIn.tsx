@@ -2,7 +2,7 @@ import { Button, Checkbox, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { GooglePlusOutlined } from '@ant-design/icons';
 import { useResize } from '@hooks/useResize';
-import { setLocalStorageItem, validateEmail, validatePassword } from '../../utils/index';
+import { setLocalStorageItem, setSessionStorage, validateEmail, validatePassword } from '../../utils/index';
 import { useAppDispatch, useAppSelector } from '@hooks/typed-react-redux-hooks';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { setEmail, setPassword, setToken, setAuth } from '@redux/userReducer';
@@ -17,6 +17,8 @@ import { CONFIRM_EMAIL, ERROR_CHECK_EMAIL, ERROR_EMAIL_NO_EXIST, ERROR_LOGIN,  H
 import { IServerErrorResponse } from '../../types/enterTypes';
 import { IForm, initialFormState } from '@pages/auth-page/types';
 import { setIsLoading } from '@redux/loaderReducer';
+import { GOOGLE_AUTH } from '@constants/api';
+
 
 
 
@@ -33,7 +35,7 @@ const SingIn: React.FC = () => {
       isSuccess: isSuccessCheckEmail,
       error: checkEmailError}] = useCheckEmailMutation();
 
-    const [rememberMe, setRememberMe] = useState(true);
+    const [rememberMe, setRememberMe] = useState(false);
     const [
         login,
         {
@@ -50,8 +52,9 @@ const SingIn: React.FC = () => {
         if(isFormValid){login({ email, password })}
     };
 
-    const handlerLoginWithGoogle = () => {
-        console.log('сделаю потом');
+    const handlerLoginWithGoogle = async () => {
+        window.location.href = GOOGLE_AUTH;
+
     };
 
     const handlerRetrievalPassword = () => {
@@ -105,11 +108,11 @@ const SingIn: React.FC = () => {
         } else (dispatch(setIsLoading(false)))
     }, [dispatch, isLoadingCheckEmail, isLoadingLogin]);
 
-    useEffect(() => {
+    useEffect(() => {            
         if (isSuccessLogin && loginData && 'accessToken' in loginData) {
             dispatch(setToken(loginData.accessToken));
             dispatch(setAuth(true));
-            rememberMe && setLocalStorageItem(LOCAL_STORAGE, loginData.accessToken);
+            rememberMe ? setLocalStorageItem(LOCAL_STORAGE, loginData.accessToken) : setSessionStorage(LOCAL_STORAGE, loginData.accessToken);
             navigate(HOMEPAGE);
         } else if(isErrorLogin){ navigate(`/result/${ERROR_LOGIN}`)}
     }, [dispatch, isErrorLogin, isSuccessLogin, loginData, navigate, rememberMe]);
@@ -149,7 +152,7 @@ const SingIn: React.FC = () => {
                     valuePropName='checked'
                     wrapperCol={{ offset: 0, span: 24 }}
                 >
-                    <Checkbox onChange={() => setRememberMe(!rememberMe)} data-test-id='login-remember'>Запомнить меня</Checkbox>
+                    <Checkbox  onChange={() => setRememberMe(!rememberMe)} data-test-id='login-remember'>Запомнить меня</Checkbox>
                 </Form.Item>
                 <button className={styles.check_button} onClick={handlerRetrievalPassword} data-test-id='login-forgot-button'>Забыли пароль?</button>
             </div>

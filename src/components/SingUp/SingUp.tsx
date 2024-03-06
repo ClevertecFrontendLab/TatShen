@@ -70,6 +70,9 @@ const SingUp: React.FC = () => {
         }));
         dispatch(setPassword(e.target.value));
     };
+
+   
+
     useEffect(() => {
         if (isLoadingForRegistration) {
             dispatch(setIsLoading(true));

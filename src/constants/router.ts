@@ -1,5 +1,5 @@
 export const HOMEPAGE = '/main';
-
+export const FEEDBACKS= '/feedbacks';
 export const AUTH = '/auth';
 export const REGISTRATION = 'registration';
 export const CONFIRM_EMAIL = 'confirm-email';

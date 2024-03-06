@@ -48,14 +48,19 @@ export const removeLocalStorageItem = (key: string) => {
     }
 };
 
-export interface IPreviousLocations {
-    location: { pathname: string };
+export const setSessionStorage = (key: string, value: unknown) => {
+    const valueToSave = JSON.stringify(value);
+    window.sessionStorage.setItem(key, valueToSave)
 }
-export const getClearLastRoutePath = (previousLocations: Array<IPreviousLocations>) => {
-    if (!previousLocations.length) return '';
 
-    return previousLocations[previousLocations.length - 1].location?.pathname.split('/').join('/');
-};
+export const getSessionStorage = (key: string) => {
+    const token = window.sessionStorage.getItem(key)
+    return token ? token : ''
+}
+
+
+
+
 
 export const getCookie = (key: string) => {
     const nameCookie = key + '=';
@@ -71,4 +76,31 @@ export const getCookie = (key: string) => {
     }
 
     return '';
+};
+
+
+export const sortArrayByDate = <T, K extends keyof T>(items: T[], key: K): T[] => {
+    const sortedItems = [...items].sort((a: T, b: T) => {
+        const date1 = Date.parse(a[key] as string);
+        const date2 = Date.parse(b[key] as string);
+
+        if (date1 < date2) {
+            return 1;
+        }
+
+        return -1;
+    });
+
+    return sortedItems;
+};
+
+
+export const getDate = (dateStr: string) => {
+    const dateFS = new Date(dateStr);
+
+    return dateFS.toLocaleDateString('ru-RU', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+    });
 };

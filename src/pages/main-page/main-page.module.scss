@@ -1,22 +1,48 @@
 @import '../../styles/variables.scss';
 
 .main {
-    padding: 0 1.5rem;
+    
     width: 100%;
     height: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 24px;
     box-sizing: border-box;
+}
+.headerContent {
+    padding: 0 1.5rem;
+    padding-top: 0.5rem;
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: -0.5em;
+    background-color:#f0f5ff ;
+    margin-top: -24px;
+    > h1 {
+        font-family: $font-family;
+        font-weight: 700;
+        line-height: 130%;
+        color: $character-light-title-85;
+        text-align: left;
+        box-sizing: border-box;
+        margin: 0;
+        width: 85%;
+        padding-right: 130px;
+    }
+    button {
+        background-color: transparent;
+    }
 }
 
 .mainContent {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 24px;
     width: 100%;
     height: auto;
+    padding: 0 1.5rem;
     > div {
         max-width: 47rem;
         width: 100%;
@@ -48,7 +74,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 16px;
     > article {
         border-radius: 0.12rem;
         height: auto;
@@ -107,14 +133,36 @@
     }
 }
 
-@media (width< 600px){
+@media (width < 600px){
     .main{
-        padding: 0 16px;
+        padding: 0;
     }
 
     .description{
        >article{
         padding: 16px;
+        }
+    }
+
+    .headerContent{
+        justify-content: space-between;
+        h1{
+            font-size: 20px !important;
+            padding: 0;
+        }
+        button {
+            border: 1px solid #d9d9d9;
+            border-radius: 100px;
+            padding: 4px 8px;
+            width: 32px;
+            height: 32px;
+            box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.04);
+            background: $character-light-primary-inverse;
+
+            span{
+                width: 13px;
+                height: 13px;
+            }
         }
     }
 }

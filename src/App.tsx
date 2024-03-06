@@ -1,26 +1,29 @@
-import SiderBar from "@components/SiderBar/Sider";
-import { Layout } from "antd";
-import React from "react";
-import { Outlet } from "react-router-dom";
-import Header_TS from "@components/Header/Header";
-import Footer_TS from "@components/Footer/Footer";
-import background from './assets/background.jpg'
-import { Loader } from "@components/Loader/Loader";
-import { useAppSelector } from "./hooks";
-
+import React, { useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './hooks';
+import { setLocalStorageItem } from './utils';
+import { AUTH, HOMEPAGE } from '@constants/router';
+import { LOCAL_STORAGE } from '@constants/localStorage';
+import { setToken } from '@redux/userReducer';
 
 const App: React.FC = () => {
-    const {isLoading} = useAppSelector((state) => state.loader)
-    return (<Layout style={{backgroundSize:'cover' ,backgroundPosition: 'center', backgroundImage: `url(${background})`, minHeight:'100vh', height:'100%', maxWidth:'1440px'}}>
-            <SiderBar/>
-            <Layout style={{background: 'transparent', gap:'24'}} >
-                <Header_TS/>
-                <Loader isLoading= {isLoading}></Loader>
-                    <Outlet/>
-                <Footer_TS />              
-            </Layout>
-    </Layout>)
-}
+   
+    const [searchParams] = useSearchParams();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const { token } = useAppSelector((state) => state.user);
+    const accessToken = searchParams.get('accessToken');
 
-export default App
+    useEffect(() => {
+        token ? navigate(HOMEPAGE) : navigate(AUTH);
+        if (accessToken) {
+            setLocalStorageItem(LOCAL_STORAGE, accessToken);
+            dispatch(setToken(accessToken));
+            navigate(HOMEPAGE);
+        }
+    }, [accessToken, dispatch, navigate, searchParams, token]);
 
+    return <></>;
+};
+
+export default App;

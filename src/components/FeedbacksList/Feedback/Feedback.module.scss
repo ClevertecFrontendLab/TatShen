@@ -1,0 +1,148 @@
+@import '../../../styles/variables.scss';
+
+:global {
+    .ant-comment {
+        font-family: $font-family;
+        width: 100%;
+        border-radius: 2px;
+        padding: 16px !important;
+        height: auto;
+        min-height: 128px;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+        background: $character-light-primary-inverse !important;
+        margin-bottom: 20px;
+        
+    }
+    .ant-comment-inner {
+        padding: 0 !important;
+    }
+    .ant-comment-content {
+        display: flex;
+        flex-direction: row;
+
+        > div {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+    .ant-comment-content-author {
+        width: 174px;
+        height: 96px;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 16px;
+    }
+    .ant-comment-content-author-name {
+        div {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+
+            span {
+                width: 42px;
+                height: 42px;
+                border-radius: 100px;
+                background-color: $character-light-background !important;
+                margin: 0 auto;
+
+                svg {
+                    fill: $character-light-title-85;
+                    width: 18px;
+                    height: 18px;
+                    margin: 0 auto;
+                }
+            }
+            div{
+                width: auto;
+                height: 42px;
+                gap: 0;
+                text-align: center;
+                p {
+                    width: auto;
+                    height: auto;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 130%;
+                    color: $character-light-title-85;
+                    font-family: $font-family;
+                    word-break: break-all;
+                    margin: 0;
+                }
+            }
+            
+        }
+    }
+    .ant-comment-content-detail {
+        height: auto;
+        width: calc(100% - 174px);
+        gap: 12px;
+        div{
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            height: 16px;
+            p{
+                font-family: $font-family;
+                font-weight: 400;
+                font-size: 12px;
+                line-height: 130%;
+                text-align: right;
+                color: $character-light-disable-25;
+            }
+        }
+        p{
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 130%;
+            color: $character-light-secondary-45;
+            word-break: break-all;
+        }
+    }
+    
+
+    .ant-rate {
+        color: #FAAD14 !important;
+        svg{
+        width: 16px;
+        height: 16px;
+        fill: #FAAD14;
+    }
+    }
+}
+
+
+@media (width < 600px ){
+    :global{
+        .ant-comment-inner {
+            flex-direction: column;
+        }
+        .ant-comment-content {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+    
+            > div {
+                display: flex;
+                flex-direction: column;
+
+            }
+        }
+        .ant-comment-content-author{
+            height: 42px;
+            width: 100%;
+            align-items: flex-start;
+        }
+        .ant-comment-content-author-name{
+            div{
+                flex-direction: row;
+                div{
+                    flex-direction: column;
+                }
+            }
+        }
+        .ant-comment-content-detail{
+            width: 100%;
+            height: auto;
+        }
+    }
+}

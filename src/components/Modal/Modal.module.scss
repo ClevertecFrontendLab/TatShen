@@ -15,12 +15,9 @@
     gap: 48px;
 }
 
-.modal_logo{
-    width: 309px;
-    height: 76px;
-}
 
-@media (width<600px){
+
+@media (width < 600px){
     .modal{
         border-radius: 2px;
         padding: 32px 16px;
@@ -32,4 +29,8 @@
         width: 203px;
         height: 50px;
     }
+}
+
+.none{
+    display: none;
 }
